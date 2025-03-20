@@ -3,7 +3,9 @@ const express = require('express');
 const axios = require('axios');
 const querystring = require('querystring');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 require('dotenv').config();
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,6 +15,8 @@ app.use(cors({
   origin: 'https://hoachau.de', // Your domain
   credentials: true
 }));
+// Add this line after app.use(cors(...))
+app.use(cookieParser());
 
 // Spotify API credentials
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
