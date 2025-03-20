@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="styles/ToolsTech.css">
     <link rel="stylesheet" href="styles/project.css">
     <link rel="stylesheet" href="styles/contact.css">
+    <link rel="stylesheet" href="styles/spotify.css">
 </head>
 
 <body>
@@ -266,6 +267,270 @@
         </div>
       </div>
     </section>
+    
+    <!-- Add this to your index.html, after the Projects section -->
+
+<!-- Spotify Section -->
+<section class="spotify" id="spotify">
+  <div class="spotify-wrapper">
+    <div class="spotify-title-wrapper">
+      <h2 class="spotify-title">My Music</h2>
+    </div>
+    
+    <div class="spotify-content">
+      <!-- Now Playing Widget -->
+      <div class="now-playing-container" id="now-playing">
+        <div class="now-playing-title">Currently Playing</div>
+        <div class="now-playing-content" id="currently-playing-track">
+          <div class="spotify-loading">Loading...</div>
+        </div>
+      </div>
+      
+      <!-- Top Tracks Widget -->
+      <div class="top-tracks-container">
+        <div class="top-tracks-title">My Top Tracks</div>
+        <div class="top-tracks-time-range">
+          <button class="time-range-btn active" data-range="short_term">Last Month</button>
+          <button class="time-range-btn" data-range="medium_term">Last 6 Months</button>
+          <button class="time-range-btn" data-range="long_term">All Time</button>
+        </div>
+        <div class="top-tracks-list" id="top-tracks">
+          <div class="spotify-loading">Loading...</div>
+        </div>
+      </div>
+      
+      <!-- Recently Played Widget -->
+      <div class="recent-tracks-container">
+        <div class="recent-tracks-title">Recently Played</div>
+        <div class="recent-tracks-list" id="recent-tracks">
+          <div class="spotify-loading">Loading...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Base API URL - change this to your server's URL
+  const API_BASE_URL = 'https://your-server-url.com';
+  
+  // Function to format duration (ms to MM:SS)
+  function formatDuration(ms) {
+    const minutes = Math.floor(ms / 60000);
+    const seconds = ((ms % 60000) / 1000).toFixed(0);
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+  }
+  
+  // Function to format date
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  }
+  
+  // Fetch and display currently playing track
+  async function fetchNowPlaying() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/spotify/now-playing`);
+      const data = await response.json();
+      
+      const container = document.getElementById('currently-playing-track');
+      
+      if (data.error) {
+        container.innerHTML = `<div class="spotify-error">Error loading data</div>`;
+        return;
+      }
+      
+      if (!data.isPlaying) {
+        container.innerHTML = `
+          <div class="not-playing">
+            <i class="fa-solid fa-headphones"></i>
+            <p>Not playing anything right now</p>
+          </div>
+        `;
+        return;
+      }
+      
+      const track = data.track;
+      const artists = track.artists.map(artist => artist.name).join(', ');
+      
+      container.innerHTML = `
+        <div class="now-playing-card">
+          <div class="now-playing-image">
+            <img src="${track.album.images[0].url}" alt="${track.name} album cover">
+            <div class="playing-indicator">
+              <span></span><span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="now-playing-info">
+            <div class="now-playing-track">${track.name}</div>
+            <div class="now-playing-artist">${artists}</div>
+            <div class="now-playing-album">${track.album.name}</div>
+            <div class="now-playing-progress">
+              <div class="progress-bar">
+                <div class="progress-fill" style="width: 0%"></div>
+              </div>
+              <div class="progress-time">
+                <span>0:00</span>
+                <span>${formatDuration(track.duration_ms)}</span>
+              </div>
+            </div>
+            <a href="${track.external_urls.spotify}" target="_blank" class="listen-on-spotify">
+              <i class="fa-brands fa-spotify"></i> Listen on Spotify
+            </a>
+          </div>
+        </div>
+      `;
+      
+    } catch (error) {
+      console.error('Error fetching now playing:', error);
+      document.getElementById('currently-playing-track').innerHTML = `
+        <div class="spotify-error">Couldn't load currently playing track</div>
+      `;
+    }
+  }
+  
+  // Fetch and display top tracks
+  async function fetchTopTracks(timeRange = 'medium_term') {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/spotify/top-tracks?time_range=${timeRange}`);
+      const data = await response.json();
+      
+      const container = document.getElementById('top-tracks');
+      
+      if (data.error) {
+        container.innerHTML = `<div class="spotify-error">Error loading data</div>`;
+        return;
+      }
+      
+      if (!data.items || data.items.length === 0) {
+        container.innerHTML = `<div class="no-data">No top tracks found for this time period</div>`;
+        return;
+      }
+      
+      let html = `<div class="tracks-grid">`;
+      
+      data.items.forEach((track, index) => {
+        const artists = track.artists.map(artist => artist.name).join(', ');
+        
+        html += `
+          <div class="track-item">
+            <div class="track-rank">#${index + 1}</div>
+            <div class="track-image">
+              <img src="${track.album.images[0].url}" alt="${track.name} album cover">
+            </div>
+            <div class="track-info">
+              <div class="track-name">${track.name}</div>
+              <div class="track-artist">${artists}</div>
+            </div>
+            <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
+              <i class="fa-brands fa-spotify"></i>
+            </a>
+          </div>
+        `;
+      });
+      
+      html += `</div>`;
+      container.innerHTML = html;
+      
+    } catch (error) {
+      console.error('Error fetching top tracks:', error);
+      document.getElementById('top-tracks').innerHTML = `
+        <div class="spotify-error">Couldn't load top tracks</div>
+      `;
+    }
+  }
+  
+  // Fetch and display recently played tracks
+  async function fetchRecentTracks() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/spotify/recent`);
+      const data = await response.json();
+      
+      const container = document.getElementById('recent-tracks');
+      
+      if (data.error) {
+        container.innerHTML = `<div class="spotify-error">Error loading data</div>`;
+        return;
+      }
+      
+      if (!data.items || data.items.length === 0) {
+        container.innerHTML = `<div class="no-data">No recently played tracks found</div>`;
+        return;
+      }
+      
+      let html = `<div class="recent-tracks-grid">`;
+      
+      data.items.forEach(item => {
+        const track = item.track;
+        const artists = track.artists.map(artist => artist.name).join(', ');
+        const playedAt = formatDate(item.played_at);
+        
+        html += `
+          <div class="recent-track-item">
+            <div class="track-image">
+              <img src="${track.album.images[0].url}" alt="${track.name} album cover">
+            </div>
+            <div class="track-info">
+              <div class="track-name">${track.name}</div>
+              <div class="track-artist">${artists}</div>
+              <div class="track-played-at">Played ${playedAt}</div>
+            </div>
+            <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
+              <i class="fa-brands fa-spotify"></i>
+            </a>
+          </div>
+        `;
+      });
+      
+      html += `</div>`;
+      container.innerHTML = html;
+      
+    } catch (error) {
+      console.error('Error fetching recent tracks:', error);
+      document.getElementById('recent-tracks').innerHTML = `
+        <div class="spotify-error">Couldn't load recently played tracks</div>
+      `;
+    }
+  }
+  
+  // Initialize data loading
+  fetchNowPlaying();
+  fetchTopTracks('medium_term');
+  fetchRecentTracks();
+  
+  // Set up time range buttons
+  const timeRangeButtons = document.querySelectorAll('.time-range-btn');
+  timeRangeButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Remove active class from all buttons
+      timeRangeButtons.forEach(btn => btn.classList.remove('active'));
+      // Add active class to clicked button
+      this.classList.add('active');
+      // Fetch data for selected time range
+      fetchTopTracks(this.dataset.range);
+    });
+  });
+  
+  // Refresh data every minute
+  setInterval(() => {
+    fetchNowPlaying();
+  }, 60000);
+  
+  // Refresh recent tracks every 5 minutes
+  setInterval(() => {
+    fetchRecentTracks();
+  }, 300000);
+});
+</script>
+
+    
 
     <!-- footer -->
     <footer id="contact">
@@ -365,6 +630,7 @@
       }
     });
     </script>
+    
 
 </body>
 </html>
