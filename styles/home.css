@@ -1,0 +1,111 @@
+.background {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../images/Background.gif');
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* behind content */
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; 
+    height: 100vh; 
+}
+
+.intro {
+    height: 100%; /* Full height of parent */
+    width: 100%;
+    display: flex;
+    justify-content: left; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    
+}
+
+.container {
+    display: grid;
+    justify-content: start; /* Center vertically */
+    align-items: center; /* Center horizontally */
+    position: relative;
+    padding: 1rem;
+    margin-left: 1rem;
+
+    background-color: rgba(255, 255, 255, 0.652);
+    border-radius: 20px;
+    border-color: rgba(0, 0, 0, 0.427);
+    border-style: solid;
+    border-width: 2px;
+}
+
+.Hi {
+    font-family: 'Press Start 2P';
+    font-size: 2rem;
+    font-weight: bold;
+    color: black;
+    text-align: left;
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.iAM {
+    font-family: 'Press Start 2P';
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+    text-align: left;
+    position: relative;
+
+    margin-top: 0.15rem;
+    -webkit-text-stroke-width: 0.5px; /*text outline*/
+    -webkit-text-stroke-color: black; /*text  outline*/
+}
+
+.btn {
+    font-family: 'Press Start 2P';
+    color: white;
+    background-color: rgb(0, 157, 255);
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: background-color 0.5s ease-out;
+    text-align: center;
+    text-decoration: none;
+}
+
+.btn:hover {
+    background-color: rgb(0, 110, 255);
+    transition: background-color 0.5s ease-out;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+        margin-left: 2rem;
+    }
+
+    .Hi {
+        font-size: 3rem;
+    }
+
+    .iAM {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: 1rem 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .Hi {
+        font-size: 3.5rem;
+    }
+
+    .iAM {
+        font-size: 2.5rem;
+    }
+}

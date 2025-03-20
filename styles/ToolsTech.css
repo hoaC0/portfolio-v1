@@ -1,0 +1,137 @@
+.ToolsTech {
+    min-height: 85vh;
+    width: 100%;
+    background-color: #f3f4f6; 
+    margin: 0;
+    padding: 2rem 0;
+}
+
+.tooltech_wrapper {
+    width: auto;
+    display: flex;
+    background-color: #f3f4f6;
+    flex-direction: column;
+}
+
+.tooltech_title_wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Center the title */
+    align-items: center;
+    background-color: #f3f4f6;
+    margin-bottom: 2rem;
+    position: relative; /* For positioning the underline */
+}
+
+.tooltech_title {
+    font-family: 'Press Start 2P';
+    font-size: 1.5rem;
+    color: rgb(15, 31, 175);
+    text-align: center;
+    margin: 0;
+    padding-bottom: 0.5rem; /* Space for the underline */
+    position: relative; /* For the underline */
+}
+
+/* Adding the gradient blue underline */
+.tooltech_title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 240px;
+    height: 4px;
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    border-radius: 2px;
+}
+
+/* responsive font size */
+.tooltech_title {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+}
+
+.tech {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem; /* Increased from 1rem for better spacing */
+    margin: 0 5%;
+    background-color: white;
+    border-radius: 20px;
+    border: 2px solid rgba(0, 0, 0, 0.427);
+    padding: 1.5rem; /* Slightly increased padding */
+}
+
+.tool-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+    padding: 1rem;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.tool-wrapper:hover {
+    transform: translateY(-10px);
+    background-color: rgba(240, 240, 240, 0.6);
+}
+
+.tool-image {
+    width: 5rem;
+    margin-bottom: 0.75rem;
+    transition: transform 0.3s ease; /* Faster transition */
+}
+
+.tool-tech {
+    text-align: center;
+    font-family: 'Press Start 2P';
+    font-size: 0.7rem;
+}
+
+@media (min-width: 768px) {
+    .tech {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .tool-image {
+        width: 6rem;
+    }
+
+    .tool-tech {
+        font-size: 0.8rem;
+    }
+    
+    /* Make underline wider on medium screens */
+    .tooltech_title::after {
+        width: 280px;
+    }
+}
+
+@media (min-width: 1024px) {
+    .tech {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    .tool-image {
+        width: 7rem;
+    }
+
+    .tool-tech {
+        font-size: 0.9rem;
+    }
+    
+    /* Make underline wider on large screens */
+    .tooltech_title::after {
+        width: 320px;
+    }
+}
+
+/* larger screens*/
+@media (min-width: 1200px) {
+    .tooltech_wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}

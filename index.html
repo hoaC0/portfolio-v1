@@ -6,13 +6,13 @@
     <title>Hoa Chau</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- font -->
-    <link rel="stylesheet" href="stylesheet.css">
-    <link rel="stylesheet" href="nav.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="about.css">
-    <link rel="stylesheet" href="ToolsTech.css">
-    <link rel="stylesheet" href="project.css">
-    <link rel="stylesheet" href="contact.css">
+    <link rel="stylesheet" href="styles/stylesheet.css">
+    <link rel="stylesheet" href="styles/nav.css">
+    <link rel="stylesheet" href="styles/home.css">
+    <link rel="stylesheet" href="styles/about.css">
+    <link rel="stylesheet" href="styles/ToolsTech.css">
+    <link rel="stylesheet" href="styles/project.css">
+    <link rel="stylesheet" href="styles/contact.css">
 </head>
 
 <body>
@@ -48,7 +48,7 @@
         <div class="container">
           <h1 class="Hi">Hey there,I'm Hoa</h1>
           <p class="iAM">I am a student, aiming to <br>become a <span id="text">software developer</span><span id="cursor">|</span></p>
-          <a href="Lebenslauf.pdf" target="_blank" class="btn">Resume</a>
+          <a href="./file/Lebenslauf.pdf" target="_blank" class="btn">Resume</a>
         </div>
         <div class="placeholder1"></div>
       </section>
@@ -125,89 +125,102 @@
         </p></div>
         
         <div class="images">
-          <div class="image"><img class="videogame" src="videogame.avif" alt=""></div>
-          <div class="image"><img class="cooking" src="cooking.avif" alt=""></div>
+          <div class="image"><img class="videogame" src="./images/videogame.avif" alt=""></div>
+          <div class="image"><img class="cooking" src="./images/cooking.avif" alt=""></div>
         </div>
         
       </div>
     </section>
 
     <!-- My Tools and Techs -->
-    <section class="ToolsTech">
-      <div class="tooltech_wrapper">
-        <div class="tooltech_title_wrapper"><h2 class="tooltech_title">My Tools and Technologies</h2></div> <!-- section title-->
-        
-        <!-- grid -->
-        <!-- grid -->
-        <div class="tech"> 
-          <div class="tool-wrapper">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" class="tool-image html"/><div class="tool-tech html1">HTML</div></div>
-          
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" class="tool-image"/>
-          <div class="tool-tech">CSS</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="tool-image"/>
-          <div class="tool-tech">JavaScript</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" class="tool-image"/>
-          <div class="tool-tech">React.js</div></div>
-
-          <div class="tool-wrapper">          
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" class="tool-image"/>
-          <div class="tool-tech">Angular.js</div>       
-          </div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" class="tool-image"/>
-          <div class="tool-tech">Node.js</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" class="tool-image"/>
-          <div class="tool-tech">Express.js</div>
-          </div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" class="tool-image"/>
-          <div class="tool-tech">C</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" class="tool-image"/>
-          <div class="tool-tech">C++</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" class="tool-image"/>
-          <div class="tool-tech">Dart</div></div>
-
-          
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" class="tool-image"/>
-          <div class="tool-tech">Flutter</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" class="tool-image"/>
-          <div class="tool-tech">Firebase</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" class="tool-image"/>
-          <div class="tool-tech">MySQL</div></div>
-
-          <div class="tool-wrapper">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" class="tool-image"/>
-          <div class="tool-tech">Git</div></div>
-
-          <div class="tool-wrapper">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" class="tool-image"/>
-          <div class="tool-tech">GitHub</div></div>
-
-          
-        
-        </div>
-      
+<!-- My Tools and Techs -->
+<section class="ToolsTech">
+  <div class="tooltech_wrapper">
+    <div class="tooltech_title_wrapper">
+      <h2 class="tooltech_title">My Tools and Technologies</h2>
+    </div>
+    
+  
+    
+    <!-- Technologies grid -->
+    <div class="tech"> 
+      <div class="tool-wrapper" data-category="frontend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" class="tool-image"/>
+        <div class="tool-tech">HTML</div>
       </div>
-    </section>
+      
+      <div class="tool-wrapper" data-category="frontend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" class="tool-image"/>
+        <div class="tool-tech">CSS</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="frontend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="tool-image"/>
+        <div class="tool-tech">JavaScript</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="frontend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" class="tool-image"/>
+        <div class="tool-tech">React.js</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="frontend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" class="tool-image"/>
+        <div class="tool-tech">Angular.js</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" class="tool-image"/>
+        <div class="tool-tech">Node.js</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" class="tool-image"/>
+        <div class="tool-tech">Express.js</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" class="tool-image"/>
+        <div class="tool-tech">C</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" class="tool-image"/>
+        <div class="tool-tech">C++</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="mobile">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" class="tool-image"/>
+        <div class="tool-tech">Dart</div>
+      </div>
+      
+      <div class="tool-wrapper" data-category="mobile">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" class="tool-image"/>
+        <div class="tool-tech">Flutter</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" class="tool-image"/>
+        <div class="tool-tech">Firebase</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" class="tool-image"/>
+        <div class="tool-tech">MySQL</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="tools">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" class="tool-image"/>
+        <div class="tool-tech">Git</div>
+      </div>
+
+      <div class="tool-wrapper" data-category="tools">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" class="tool-image"/>
+        <div class="tool-tech">GitHub</div>
+      </div>
+    </div>
+  </div>
+</section>
 
     <!-- Projects -->
     <section class="project" id="project">
@@ -216,41 +229,39 @@
       <h2 class="project-latest">What I have built recently...</h2>
         <div class="project-grid">
 
-          <div class="project-wrapper"><img src="practice-portfolio.png" alt="" class="project-img"><div class="project-txt">Practice Portfolio Website</div>
+          <div class="project-wrapper"><img src="./images/practice-portfolio.png" alt="" class="project-img"><div class="project-txt">Practice Portfolio Website</div>
           <div class="project-description">A simple portfolio site I put together to practice my HTML and CSS skills. It's got the basics - a spot for projects, my skills and a contact form</div>
           <a href="https://github.com/hoaC0/practice-portfolio" target="_blank" class="project-github-link">
-          <img src="coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
-          <div class="project-wrapper"><img src="to-do.png" alt="" class="project-img"><div class="project-txt">To Do List</div>
+          <div class="project-wrapper"><img src="./images/to-do.png" alt="" class="project-img"><div class="project-txt">To Do List</div>
           <div class="project-description">An aesthetically pleasing to-do list app I built using HTML, CSS, and JavaScript. You can add tasks, mark them as done, edit them and clear completed ones.</div>
           <a href="https://github.com/hoaC0/to-do-list-app" target="_blank" class="project-github-link">
-          <img src="coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
           <div class="project-wrapper">
-            <img src="Kniffel.png" alt="Kniffel / Yahtzee Game" class="project-img">
-            <div class="project-txt">Kniffel / Yahtzee</div>
-            <div class="project-description">
-              A dice game, built in C++ using object-oriented programming principles. This project focuses on game logic, player interactions, random number generation, and applying OOP concepts such as classes and inheritance.
-            </div>
-            <a href="https://github.com/hoaC0/Kniffel" target="_blank" class="project-github-link">
-              <img src="coding.png" alt="View code on GitHub" class="coding-icon">
-            </a>
+          <img src="./images/Kniffel.png" alt="Kniffel / Yahtzee Game" class="project-img">
+          <div class="project-txt">Kniffel / Yahtzee</div>
+          <div class="project-description">
+          A dice game, built in C++ using object-oriented programming principles. This project focuses on game logic, player interactions, random number generation, and applying OOP concepts such as classes and inheritance.
           </div>
+          <a href="https://github.com/hoaC0/Kniffel" target="_blank" class="project-github-link">
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
           
-          <div class="project-wrapper"><img src="placeholder.webp" alt="" class="project-img"><div class="project-txt">RecipeShuffle</div>
+          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">RecipeShuffle</div>
           <div class="project-description">A simple recipe web app, built with React, JavaScript, MySQL and Node.js. It allows users to create, share and save their favorite recipes. You don't know what to cook? Shuffle your recipes for the week!</div>
           <a href="https://github.com/hoaC0/RecipeShuffle" target="_blank" class="project-github-link">
-          <img src="coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
-          <div class="project-wrapper"><img src="placeholder.webp" alt="" class="project-img"><div class="project-txt">BlindowTime</div>
+          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">BlindowTime</div>
           <div class="project-description">A platform developed with JavaScript, React, MySQL, Node.js, and GP Untis that allows students and teachers to view schedules and updates in real time. Important notifications are displayed directly, while the administration can efficiently manage and update schedules and rooms through a dedicated dashboard.</div>
           <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
-          <img src="coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
-          <div class="project-wrapper"><img src="placeholder.webp" alt="" class="project-img"><div class="project-txt">Empty</div>
+          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">Empty</div>
           <div class="project-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ipsam repellendus? Magni non eaque aperiam at illo dignissimos eveniet modi possimus nisi assumenda minus unde aspernatur, fugit quas cumque repellat!</div>
           <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
-          <img src="coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
         
         </div>
       </div>
@@ -294,6 +305,42 @@
     
       <p class="copyright">&copy; 2025 Hoa Chau. All rights reserved.</p>
     </footer>
+
+    <script>
+      
+    document.addEventListener('DOMContentLoaded', function() {
+      const categories = document.querySelectorAll('.tech-category');
+      const tools = document.querySelectorAll('.tool-wrapper');
+      
+      
+      categories.forEach(category => {
+        category.addEventListener('click', function() {
+          
+          categories.forEach(cat => cat.classList.remove('active'));
+          
+          
+          this.classList.add('active');
+          
+          
+          const selectedCategory = this.textContent.toLowerCase();
+          
+          
+          tools.forEach(tool => {
+            if (selectedCategory === 'all') {
+              tool.style.display = 'flex';
+            } else {
+              const toolCategory = tool.getAttribute('data-category');
+              if (toolCategory === selectedCategory) {
+                tool.style.display = 'flex';
+              } else {
+                tool.style.display = 'none';
+              }
+            }
+          });
+        });
+      });
+    });
+    </script>
 
 </body>
 </html>
