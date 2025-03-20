@@ -1,7 +1,16 @@
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 60px;
+}
+
 body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+  }
+
+  section {
+    padding-top: 20px;
   }
   
   .content-container {
@@ -9,6 +18,8 @@ body {
     margin: 0 auto;
     padding: 0 clamp(1rem, 5vw, 4rem);
   }
+
+
   
   
   h1 {
@@ -44,4 +55,10 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 clamp(1rem, 5vw, 4rem);
+  }
+
+  @media screen and (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }

@@ -26,11 +26,14 @@
 .tooltech_title {
     font-family: 'Press Start 2P';
     font-size: 1.5rem;
-    color: rgb(15, 31, 175);
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
     margin: 0;
-    padding-bottom: 0.5rem; /* Space for the underline */
-    position: relative; /* For the underline */
+    padding-bottom: 0.5rem;
+    position: relative;
 }
 
 /* Adding the gradient blue underline */

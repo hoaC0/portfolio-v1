@@ -35,7 +35,10 @@
     text-align: left;
     font-size: 0.9rem;
     font-family: 'Press Start 2P';
-    color: rgb(15, 31, 175);
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     margin-bottom: 1rem;
 }
 

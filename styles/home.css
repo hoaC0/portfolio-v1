@@ -65,20 +65,91 @@ main {
     -webkit-text-stroke-color: black; /*text  outline*/
 }
 
-.btn {
+/* Changes for ToolsTech.css */
+.tooltech_title {
     font-family: 'Press Start 2P';
-    color: white;
-    background-color: rgb(0, 157, 255);
-    padding: 0.75rem 1.5rem;
-    border-radius: 10px;
-    transition: background-color 0.5s ease-out;
+    font-size: 1.5rem;
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     text-align: center;
-    text-decoration: none;
+    margin: 0;
+    padding-bottom: 0.5rem;
+    position: relative;
 }
 
-.btn:hover {
-    background-color: rgb(0, 110, 255);
-    transition: background-color 0.5s ease-out;
+/* Changes for about.css */
+.aboutmeHI {
+    font-family: 'Press Start 2P';
+    font-size: 1.5rem;
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: left;
+    margin: 1rem 0;
+}
+
+/* Changes for project.css */
+.project-latest {
+    width: 100%;
+    text-align: left;
+    font-size: 0.9rem;
+    font-family: 'Press Start 2P';
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+}
+
+/* Button styles for home.css and contact.css */
+.btn, .form-submit {
+    font-family: 'Press Start 2P';
+    color: white;
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    background-size: 200% auto;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    transition: all 0.4s ease;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.2);
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn:hover, .form-submit:hover {
+    background-position: right center;
+    box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+    transform: translateY(-3px);
+}
+
+.btn:active, .form-submit:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.3);
+}
+
+/* Add a subtle shine effect on hover */
+.btn::before, .form-submit::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(30deg);
+    z-index: -1;
+    transition: transform 0.6s ease;
+    opacity: 0;
+}
+
+.btn:hover::before, .form-submit:hover::before {
+    opacity: 1;
+    transform: rotate(30deg) translate(10%, 10%);
 }
 
 @media (min-width: 768px) {
