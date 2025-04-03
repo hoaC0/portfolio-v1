@@ -190,6 +190,11 @@
         <div class="tool-tech">C++</div>
       </div>
 
+      <div class="tool-wrapper" data-category="backend">
+        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" class="tool-image"/>
+        <div class="tool-tech">Bash</div>
+      </div>
+
       <div class="tool-wrapper" data-category="mobile">
         <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" class="tool-image"/>
         <div class="tool-tech">Dart</div>
@@ -230,15 +235,15 @@
       <h2 class="project-latest">What I have built recently...</h2>
         <div class="project-grid">
 
-          <div class="project-wrapper"><img src="./images/practice-portfolio.png" alt="" class="project-img"><div class="project-txt">Practice Portfolio Website</div>
-          <div class="project-description">A simple portfolio site I put together to practice my HTML and CSS skills. It's got the basics - a spot for projects, my skills and a contact form</div>
-          <a href="https://github.com/hoaC0/practice-portfolio" target="_blank" class="project-github-link">
+          <div class="project-wrapper"><img src="./images/BlindowTime.png" alt="" class="project-img"><div class="project-txt">BlindowTime</div>
+          <div class="project-description">A platform developed with JavaScript, React, MySQL, Node.js, and GP Untis that allows students and teachers to view schedules and updates in real time. Important notifications are displayed directly, while the administration can efficiently manage and update schedules and rooms through a dedicated dashboard.</div>
+          <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
           <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
-          <div class="project-wrapper"><img src="./images/to-do.png" alt="" class="project-img"><div class="project-txt">To Do List</div>
-          <div class="project-description">An aesthetically pleasing to-do list app I built using HTML, CSS, and JavaScript. You can add tasks, mark them as done, edit them and clear completed ones.</div>
-          <a href="https://github.com/hoaC0/to-do-list-app" target="_blank" class="project-github-link">
-            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+          <div class="project-wrapper"><img src="./images/RecipeShuffle.png" alt="" class="project-img"><div class="project-txt">RecipeShuffle</div>
+          <div class="project-description">A simple recipe web app, built with React, JavaScript, MySQL and Node.js. It allows users to create, share and save their favorite recipes. You don't know what to cook? Shuffle your recipes for the week!</div>
+          <a href="https://github.com/hoaC0/RecipeShuffle" target="_blank" class="project-github-link">
+          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
           <div class="project-wrapper">
           <img src="./images/Kniffel.png" alt="Kniffel / Yahtzee Game" class="project-img">
@@ -248,15 +253,15 @@
           </div>
           <a href="https://github.com/hoaC0/Kniffel" target="_blank" class="project-github-link">
           <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
-          
-          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">RecipeShuffle</div>
-          <div class="project-description">A simple recipe web app, built with React, JavaScript, MySQL and Node.js. It allows users to create, share and save their favorite recipes. You don't know what to cook? Shuffle your recipes for the week!</div>
-          <a href="https://github.com/hoaC0/RecipeShuffle" target="_blank" class="project-github-link">
+
+          <div class="project-wrapper"><img src="./images/practice-portfolio.png" alt="" class="project-img"><div class="project-txt">Practice Portfolio Website</div>
+          <div class="project-description">A simple portfolio site I put together to practice my HTML and CSS skills. It's got the basics - a spot for projects, my skills and a contact form</div>
+          <a href="https://github.com/hoaC0/practice-portfolio" target="_blank" class="project-github-link">
           <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
-          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">BlindowTime</div>
-          <div class="project-description">A platform developed with JavaScript, React, MySQL, Node.js, and GP Untis that allows students and teachers to view schedules and updates in real time. Important notifications are displayed directly, while the administration can efficiently manage and update schedules and rooms through a dedicated dashboard.</div>
-          <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
+          <div class="project-wrapper"><img src="./images/to-do.png" alt="" class="project-img"><div class="project-txt">To Do List</div>
+          <div class="project-description">An aesthetically pleasing to-do list app I built using HTML, CSS, and JavaScript. You can add tasks, mark them as done, edit them and clear completed ones.</div>
+          <a href="https://github.com/hoaC0/to-do-list-app" target="_blank" class="project-github-link">
           <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
 
           <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">Empty</div>
@@ -268,7 +273,7 @@
       </div>
     </section>
     
-    <!-- Add this to your index.html, after the Projects section -->
+    
 
 <!-- Spotify Section -->
 <section class="spotify" id="spotify">
@@ -276,6 +281,8 @@
     <div class="spotify-title-wrapper">
       <h2 class="spotify-title">My Music</h2>
     </div>
+    
+
     
     <div class="spotify-content">
       <!-- Now Playing Widget -->
@@ -312,8 +319,8 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Base API URL - change this to your server's URL
-  const API_BASE_URL = 'https://your-server-url.com';
+  // Base API URL - empty string will use the same server
+  const API_BASE_URL = '';
   
   // Function to format duration (ms to MM:SS)
   function formatDuration(ms) {
@@ -334,9 +341,33 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
+  // Check authentication status to improve error messages
+  async function checkAuthStatus() {
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/spotify/status`);
+      const data = await response.json();
+      console.log("Auth status:", data);
+      return data.authenticated;
+    } catch (error) {
+      console.error("Error checking auth status:", error);
+      return false;
+    }
+  }
+  
   // Fetch and display currently playing track
   async function fetchNowPlaying() {
     try {
+      const authenticated = await checkAuthStatus();
+      if (!authenticated) {
+        document.getElementById('currently-playing-track').innerHTML = `
+          <div class="not-playing">
+            <i class="fa-solid fa-headphones"></i>
+            <p>Please connect with Spotify</p>
+          </div>
+        `;
+        return;
+      }
+      
       const response = await fetch(`${API_BASE_URL}/api/spotify/now-playing`);
       const data = await response.json();
       
@@ -399,6 +430,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Fetch and display top tracks
   async function fetchTopTracks(timeRange = 'medium_term') {
     try {
+      const authenticated = await checkAuthStatus();
+      if (!authenticated) {
+        document.getElementById('top-tracks').innerHTML = `
+          <div class="no-data">Please connect with Spotify</div>
+        `;
+        return;
+      }
+      
       const response = await fetch(`${API_BASE_URL}/api/spotify/top-tracks?time_range=${timeRange}`);
       const data = await response.json();
       
@@ -450,6 +489,14 @@ document.addEventListener('DOMContentLoaded', function() {
   // Fetch and display recently played tracks
   async function fetchRecentTracks() {
     try {
+      const authenticated = await checkAuthStatus();
+      if (!authenticated) {
+        document.getElementById('recent-tracks').innerHTML = `
+          <div class="no-data">Please connect with Spotify</div>
+        `;
+        return;
+      }
+      
       const response = await fetch(`${API_BASE_URL}/api/spotify/recent`);
       const data = await response.json();
       
@@ -517,6 +564,18 @@ document.addEventListener('DOMContentLoaded', function() {
       fetchTopTracks(this.dataset.range);
     });
   });
+  
+  // Check for success/error query parameters
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    console.log('Successfully authenticated with Spotify!');
+    // Refresh data after successful authentication
+    fetchNowPlaying();
+    fetchTopTracks('medium_term');
+    fetchRecentTracks();
+  } else if (urlParams.get('error')) {
+    console.error('Authentication error:', urlParams.get('error'));
+  }
   
   // Refresh data every minute
   setInterval(() => {

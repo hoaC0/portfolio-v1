@@ -64,6 +64,15 @@
     padding: 1rem;
 }
 
+
+.project-wrapper:hover{
+    background-color: rgba(240, 240, 240, 0.6);
+}
+.project-wrapper:hover .coding-icon{
+    background-color: rgba(240, 240, 240, 0.6);
+}
+
+
 .project-img {
     width: 100%;
     max-width: 300px;
@@ -76,6 +85,13 @@
     font-weight: bold;
     text-align: center;
     margin-bottom: 1rem;
+
+    /* gradient text */
+    background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    -webkit-text-fill-color: transparent;
 }
 
 .project-description {
@@ -92,6 +108,7 @@
     padding: 4px;
     margin-top: 10px;
   }
+
   
   .project-github-link:hover {
     transform: scale(1.1);
