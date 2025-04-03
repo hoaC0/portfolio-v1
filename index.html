@@ -317,10 +317,55 @@
   </div>
 </section>
 
+<!-- here !!!-->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check if we're returning from auth
+    const urlParams = new URLSearchParams(window.location.search);
+    const isAuthSuccess = urlParams.get('success') === 'true';
+    const hasNotAttemptedAuth = !localStorage.getItem('spotify_auth_attempted');
+
+    if (!isAuthSuccess && hasNotAttemptedAuth) {
+      // First time loading the page without auth - initiate Spotify login
+      localStorage.setItem('spotify_auth_attempted', 'true');
+      window.location.href = 'https://spotify-api-iota-one.vercel.app/login';
+    } else if (isAuthSuccess) {
+      // Successfully returned from authentication
+      console.log('Successfully authenticated with Spotify!');
+      localStorage.removeItem('spotify_auth_attempted');
+      
+      // Refresh data after successful authentication
+      fetchNowPlaying();
+      fetchTopTracks('medium_term');
+      fetchRecentTracks();
+    }
+  });
+</script>
+
+<style>
+  .spotify-auth-button {
+    background-color: #1DB954;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 20px auto;
+  }
+  
+  .spotify-auth-button:hover {
+    background-color: #1ed760;
+  }
+</style>
+
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  // Base API URL - empty string will use the same server
-  const API_BASE_URL = '';
+  // api URL
+  const API_BASE_URL = 'https://spotify-api-iota-one.vercel.app';
   
   // Function to format duration (ms to MM:SS)
   function formatDuration(ms) {
