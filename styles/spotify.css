@@ -50,6 +50,7 @@
   border-radius: 2px;
 }
 
+/* Main content layout */
 .spotify-content {
   display: grid;
   grid-template-columns: 1fr;
@@ -57,7 +58,7 @@
   margin: 0 5%;
 }
 
-/* Fixed container styles - added proper padding and consistent styling */
+/* Container styles - consistent padding and styling */
 .now-playing-container,
 .top-tracks-container,
 .recent-tracks-container {
@@ -72,6 +73,7 @@
   box-sizing: border-box;
 }
 
+/* Container titles */
 .now-playing-title,
 .top-tracks-title,
 .recent-tracks-title {
@@ -83,6 +85,7 @@
   width: 100%;
 }
 
+/* Loading and error states */
 .spotify-loading {
   display: flex;
   justify-content: center;
@@ -172,8 +175,7 @@
 }
 
 @keyframes sound-wave {
-  0%,
-  100% {
+  0%, 100% {
     transform: scaleY(1);
   }
   50% {
@@ -208,76 +210,6 @@
   text-overflow: ellipsis;
 }
 
-.now-playing-progress {
-  margin: 0.5rem 0;
-}
-
-.progress-bar {
-  height: 4px;
-  background-color: #eee;
-  border-radius: 2px;
-  overflow: hidden;
-  margin-bottom: 0.25rem;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
-  border-radius: 2px;
-  width: 30%;
-}
-
-.progress-time {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.6rem;
-  color: #888;
-}
-
-.listen-on-spotify {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background-color: #1db954;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 50px;
-  font-size: 0.7rem;
-  text-decoration: none;
-  margin-top: 0.5rem;
-  transition: all 0.3s ease;
-}
-
-.listen-on-spotify:hover {
-  background-color: #1ed760;
-  transform: translateY(-2px);
-}
-
-.fa-spotify {
-  font-size: 1.2rem;
-}
-
-.not-playing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem 0;
-}
-
-.not-playing i {
-  font-size: 3rem;
-  color: #ddd;
-}
-
-.not-playing p {
-  font-family: "Press Start 2P";
-  font-size: 0.8rem;
-  color: #888;
-}
-
 /* Top Tracks Section */
 .top-tracks-time-range {
   display: flex;
@@ -309,7 +241,7 @@
   color: white;
 }
 
-/* Fixed grid layouts for tracks */
+/* Tracks grid - improved layout */
 .tracks-grid,
 .recent-tracks-grid {
   display: grid;
@@ -318,7 +250,7 @@
   width: 100%;
 }
 
-/* Track Item Styling */
+/* Track Item Styling - enhanced for better display */
 .track-item,
 .recent-track-item {
   display: flex;
@@ -334,7 +266,7 @@
 
 .track-item:hover,
 .recent-track-item:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
   background-color: #f0f0f0;
 }
@@ -345,6 +277,7 @@
   text-align: center;
   font-size: 0.8rem;
   color: #666;
+  font-family: "Press Start 2P";
 }
 
 .track-image {
@@ -371,7 +304,7 @@
 
 .track-name {
   font-family: "Press Start 2P";
-  font-size: 0.8rem; /* Reduced font size for better fit */
+  font-size: 0.8rem;
   color: #333;
   white-space: nowrap;
   overflow: hidden;
@@ -381,7 +314,7 @@
 
 .track-artist {
   font-family: "Press Start 2P";
-  font-size: 0.6rem; /* Reduced font size for better fit */
+  font-size: 0.6rem;
   color: #666;
   white-space: nowrap;
   overflow: hidden;
@@ -390,7 +323,7 @@
 
 .track-played-at {
   font-family: "Press Start 2P";
-  font-size: 0.5rem; /* Reduced font size for better fit */
+  font-size: 0.5rem;
   color: #999;
   margin-top: 0.25rem;
   white-space: nowrap;
@@ -414,6 +347,28 @@
   transform: scale(1.1);
 }
 
+/* Not playing state */
+.not-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem 0;
+}
+
+.not-playing i {
+  font-size: 3rem;
+  color: #ddd;
+}
+
+.not-playing p {
+  font-family: "Press Start 2P";
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
+}
+
 /* Responsive Layouts */
 @media (min-width: 768px) {
   .spotify-content {
@@ -426,16 +381,11 @@
 
   .now-playing-card {
     flex-direction: row;
+    align-items: flex-start;
   }
 
   .now-playing-info {
     padding-left: 1rem;
-  }
-
-  .tracks-grid,
-  .recent-tracks-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
   }
 
   .spotify-title::after {
@@ -444,14 +394,6 @@
 }
 
 @media (min-width: 1024px) {
-  .spotify-content {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .now-playing-container {
-    grid-column: span 2;
-  }
-
   .tracks-grid,
   .recent-tracks-grid {
     grid-template-columns: 1fr 1fr;
@@ -463,14 +405,6 @@
   }
 }
 
-@media (min-width: 1440px) {
-  .tracks-grid,
-  .recent-tracks-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-}
-
 @media (max-width: 480px) {
   .track-item,
   .recent-track-item {
@@ -478,17 +412,18 @@
   }
 
   .track-rank {
-    display: none;
+    width: 20px;
+    font-size: 0.6rem;
   }
 
   .track-image {
-    width: 50px;
-    height: 50px;
-    margin-right: 0.8rem;
+    width: 45px;
+    height: 45px;
+    margin-right: 0.6rem;
   }
 
   .track-name {
-    font-size: 0.7rem;
+    font-size: 0.65rem;
   }
 
   .track-artist {
@@ -496,7 +431,11 @@
   }
 
   .track-played-at {
-    font-size: 0.45rem;
+    font-size: 0.4rem;
+  }
+  
+  .time-range-btn {
+    font-size: 0.5rem;
+    padding: 0.3rem 0.6rem;
   }
 }
-
