@@ -374,7 +374,7 @@
   align-items: center;
   background-color: #f9f9f9;
   border-radius: 12px;
-  padding: 1rem;
+  padding: 0.5rem;
   transition: all 0.3s ease;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   width: 100%;
@@ -487,7 +487,7 @@
   
   .top-tracks-container,
   .recent-tracks-container {
-    padding: 2rem;
+    padding: 0.75rem;
     min-width: 0; /* Prevent min-width from causing overflow */
   }
 }
