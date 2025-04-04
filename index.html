@@ -317,347 +317,324 @@
   </div>
 </section>
 
-<!-- here !!!-->
 <script>
+  // Simple and reliable Spotify integration
   document.addEventListener('DOMContentLoaded', function() {
-    // Check if we're returning from auth
-    const urlParams = new URLSearchParams(window.location.search);
-    const isAuthSuccess = urlParams.get('success') === 'true';
-    const hasNotAttemptedAuth = !localStorage.getItem('spotify_auth_attempted');
-
-    if (!isAuthSuccess && hasNotAttemptedAuth) {
-      // First time loading the page without auth - initiate Spotify login
-      localStorage.setItem('spotify_auth_attempted', 'true');
-      window.location.href = 'https://spotify-api-iota-one.vercel.app/login';
-    } else if (isAuthSuccess) {
-      // Successfully returned from authentication
-      console.log('Successfully authenticated with Spotify!');
-      localStorage.removeItem('spotify_auth_attempted');
-      
-      // Refresh data after successful authentication
-      fetchNowPlaying();
-      fetchTopTracks('medium_term');
-      fetchRecentTracks();
+    // API URL
+    const API_BASE_URL = 'https://spotify-api-iota-one.vercel.app';
+  
+    // Function to truncate text that's too long
+    function truncateText(text, maxLength) {
+      if (!text) return '';
+      if (text.length <= maxLength) return text;
+      return text.substring(0, maxLength) + '...';
     }
-  });
-</script>
-
-<style>
-  .spotify-auth-button {
-    background-color: #1DB954;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    font-weight: bold;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin: 20px auto;
-  }
   
-  .spotify-auth-button:hover {
-    background-color: #1ed760;
-  }
-</style>
-
-<script>
-// Simple and reliable Spotify integration
-// Replace your existing Spotify script with this one
-document.addEventListener('DOMContentLoaded', function() {
-  // API URL
-  const API_BASE_URL = 'https://spotify-api-iota-one.vercel.app';
-
-  // Function to format duration (ms to MM:SS)
-  function formatDuration(ms) {
-    const minutes = Math.floor(ms / 60000);
-    const seconds = ((ms % 60000) / 1000).toFixed(0);
-    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-  }
-  
-  // Function to format date
-  function formatDate(dateString) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
-  }
-
-  // -------------------------------------
-  // Fetch and display currently playing track
-  // -------------------------------------
-  async function fetchNowPlaying() {
-    const container = document.getElementById('currently-playing-track');
+    // Function to format duration (ms to MM:SS)
+    function formatDuration(ms) {
+      const minutes = Math.floor(ms / 60000);
+      const seconds = ((ms % 60000) / 1000).toFixed(0);
+      return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    }
     
-    // Set loading state
-    container.innerHTML = '<div class="spotify-loading">Loading...</div>';
-    
-    try {
-      // Make the API request
-      const response = await fetch(`${API_BASE_URL}/api/spotify/now-playing`, {
-        headers: { 'Cache-Control': 'no-cache' }
+    // Function to format date
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'short', 
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
       });
+    }
+  
+    // Fetch and display currently playing track
+    async function fetchNowPlaying() {
+      const container = document.getElementById('currently-playing-track');
       
-      // Check for errors
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      // Set loading state
+      container.innerHTML = '<div class="spotify-loading">Loading...</div>';
       
-      const data = await response.json();
-      
-      // Handle not playing state
-      if (!data.isPlaying) {
+      try {
+        // Make the API request
+        const response = await fetch(`${API_BASE_URL}/api/spotify/now-playing`, {
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        // Check for errors
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle not playing state
+        if (!data.isPlaying) {
+          container.innerHTML = `
+            <div class="not-playing">
+              <i class="fa-solid fa-headphones"></i>
+              <p>Not playing anything right now</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // Display the currently playing track
+        const track = data.track;
+        
+        // Truncate long text
+        const trackName = truncateText(track.name, 45);
+        const artists = track.artists.map(artist => artist.name).join(', ');
+        const artistsText = truncateText(artists, 50);
+        const albumName = truncateText(track.album.name, 45);
+        
+        container.innerHTML = `
+          <div class="now-playing-card">
+            <div class="now-playing-image">
+              <img src="${track.album.images[0].url}" alt="${trackName} album cover">
+              <div class="playing-indicator">
+                <span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+            <div class="now-playing-info">
+              <div class="now-playing-track" title="${track.name}">${trackName}</div>
+              <div class="now-playing-artist" title="${artists}">${artistsText}</div>
+              <div class="now-playing-album" title="${track.album.name}">${albumName}</div>
+              <div class="now-playing-progress">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="progress-time">
+                  <span>0:00</span>
+                  <span>${formatDuration(track.duration_ms)}</span>
+                </div>
+              </div>
+              <a href="${track.external_urls.spotify}" target="_blank" class="listen-on-spotify">
+                <i class="fa-brands fa-spotify"></i> Listen on Spotify
+              </a>
+            </div>
+          </div>
+        `;
+      } catch (error) {
+        console.error('Error fetching now playing:', error);
         container.innerHTML = `
           <div class="not-playing">
             <i class="fa-solid fa-headphones"></i>
-            <p>Not playing anything right now</p>
+            <p>Unable to load currently playing track</p>
           </div>
         `;
-        return;
       }
-      
-      // Display the currently playing track
-      const track = data.track;
-      const artists = track.artists.map(artist => artist.name).join(', ');
-      
-      container.innerHTML = `
-        <div class="now-playing-card">
-          <div class="now-playing-image">
-            <img src="${track.album.images[0].url}" alt="${track.name} album cover">
-            <div class="playing-indicator">
-              <span></span><span></span><span></span><span></span>
-            </div>
-          </div>
-          <div class="now-playing-info">
-            <div class="now-playing-track">${track.name}</div>
-            <div class="now-playing-artist">${artists}</div>
-            <div class="now-playing-album">${track.album.name}</div>
-            <div class="now-playing-progress">
-              <div class="progress-bar">
-                <div class="progress-fill" style="width: 0%"></div>
-              </div>
-              <div class="progress-time">
-                <span>0:00</span>
-                <span>${formatDuration(track.duration_ms)}</span>
-              </div>
-            </div>
-            <a href="${track.external_urls.spotify}" target="_blank" class="listen-on-spotify">
-              <i class="fa-brands fa-spotify"></i> Listen on Spotify
-            </a>
-          </div>
-        </div>
-      `;
-    } catch (error) {
-      console.error('Error fetching now playing:', error);
-      container.innerHTML = `
-        <div class="not-playing">
-          <i class="fa-solid fa-headphones"></i>
-          <p>Unable to load currently playing track</p>
-        </div>
-      `;
     }
-  }
-  
-  // -------------------------------------
-  // Fetch and display top tracks
-  // -------------------------------------
-  async function fetchTopTracks(timeRange = 'medium_term') {
-    const container = document.getElementById('top-tracks');
     
-    // Set loading state
-    container.innerHTML = '<div class="spotify-loading">Loading...</div>';
-    
-    try {
-      // Make the API request
-      const response = await fetch(`${API_BASE_URL}/api/spotify/top-tracks?time_range=${timeRange}`, {
-        headers: { 'Cache-Control': 'no-cache' }
-      });
+    // Fetch and display top tracks
+    async function fetchTopTracks(timeRange = 'medium_term') {
+      const container = document.getElementById('top-tracks');
       
-      // Check for errors
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      // Set loading state
+      container.innerHTML = '<div class="spotify-loading">Loading...</div>';
       
-      const data = await response.json();
-      
-      // Handle empty response
-      if (!data.items || data.items.length === 0) {
+      try {
+        // Make the API request
+        const response = await fetch(`${API_BASE_URL}/api/spotify/top-tracks?time_range=${timeRange}`, {
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        // Check for errors
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle empty response
+        if (!data.items || data.items.length === 0) {
+          container.innerHTML = `
+            <div class="not-playing">
+              <i class="fa-solid fa-music"></i>
+              <p>No top tracks found for this time period</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // Display top tracks
+        let html = `<div class="tracks-grid">`;
+        
+        data.items.forEach((track, index) => {
+          // Truncate long titles and artist names
+          const trackName = truncateText(track.name, 35);
+          const artists = track.artists.map(artist => artist.name).join(', ');
+          const artistsText = truncateText(artists, 40);
+          
+          html += `
+            <div class="track-item">
+              <div class="track-rank">#${index + 1}</div>
+              <div class="track-image">
+                <img src="${track.album.images[0].url}" alt="${trackName} album cover">
+              </div>
+              <div class="track-info">
+                <div class="track-name" title="${track.name}">${trackName}</div>
+                <div class="track-artist" title="${artists}">${artistsText}</div>
+              </div>
+              <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
+                <i class="fa-brands fa-spotify"></i>
+              </a>
+            </div>
+          `;
+        });
+        
+        html += `</div>`;
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Error fetching top tracks:', error);
         container.innerHTML = `
           <div class="not-playing">
             <i class="fa-solid fa-music"></i>
-            <p>No top tracks found for this time period</p>
+            <p>Unable to load top tracks</p>
           </div>
         `;
-        return;
       }
-      
-      // Display top tracks
-      let html = `<div class="tracks-grid">`;
-      
-      data.items.forEach((track, index) => {
-        const artists = track.artists.map(artist => artist.name).join(', ');
-        
-        html += `
-          <div class="track-item">
-            <div class="track-rank">#${index + 1}</div>
-            <div class="track-image">
-              <img src="${track.album.images[0].url}" alt="${track.name} album cover">
-            </div>
-            <div class="track-info">
-              <div class="track-name">${track.name}</div>
-              <div class="track-artist">${artists}</div>
-            </div>
-            <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
-              <i class="fa-brands fa-spotify"></i>
-            </a>
-          </div>
-        `;
-      });
-      
-      html += `</div>`;
-      container.innerHTML = html;
-    } catch (error) {
-      console.error('Error fetching top tracks:', error);
-      container.innerHTML = `
-        <div class="not-playing">
-          <i class="fa-solid fa-music"></i>
-          <p>Unable to load top tracks</p>
-        </div>
-      `;
     }
-  }
-  
-  // -------------------------------------
-  // Fetch and display recently played tracks
-  // -------------------------------------
-  async function fetchRecentTracks() {
-    const container = document.getElementById('recent-tracks');
     
-    // Set loading state
-    container.innerHTML = '<div class="spotify-loading">Loading...</div>';
-    
-    try {
-      // Make the API request
-      const response = await fetch(`${API_BASE_URL}/api/spotify/recent`, {
-        headers: { 'Cache-Control': 'no-cache' }
-      });
+    // Fetch and display recently played tracks
+    async function fetchRecentTracks() {
+      const container = document.getElementById('recent-tracks');
       
-      // Check for errors
-      if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      // Set loading state
+      container.innerHTML = '<div class="spotify-loading">Loading...</div>';
       
-      const data = await response.json();
-      
-      // Handle empty response
-      if (!data.items || data.items.length === 0) {
+      try {
+        // Make the API request
+        const response = await fetch(`${API_BASE_URL}/api/spotify/recent`, {
+          headers: { 'Cache-Control': 'no-cache' }
+        });
+        
+        // Check for errors
+        if (!response.ok) {
+          throw new Error(`Server responded with ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Handle empty response
+        if (!data.items || data.items.length === 0) {
+          container.innerHTML = `
+            <div class="not-playing">
+              <i class="fa-solid fa-history"></i>
+              <p>No recently played tracks found</p>
+            </div>
+          `;
+          return;
+        }
+        
+        // Display recently played tracks
+        let html = `<div class="recent-tracks-grid">`;
+        
+        data.items.forEach(item => {
+          const track = item.track;
+          
+          // Truncate long titles and artist names
+          const trackName = truncateText(track.name, 35);
+          const artists = track.artists.map(artist => artist.name).join(', ');
+          const artistsText = truncateText(artists, 40);
+          
+          const playedAt = formatDate(item.played_at);
+          
+          html += `
+            <div class="recent-track-item">
+              <div class="track-image">
+                <img src="${track.album.images[0].url}" alt="${trackName} album cover">
+              </div>
+              <div class="track-info">
+                <div class="track-name" title="${track.name}">${trackName}</div>
+                <div class="track-artist" title="${artists}">${artistsText}</div>
+                <div class="track-played-at">Played ${playedAt}</div>
+              </div>
+              <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
+                <i class="fa-brands fa-spotify"></i>
+              </a>
+            </div>
+          `;
+        });
+        
+        html += `</div>`;
+        container.innerHTML = html;
+      } catch (error) {
+        console.error('Error fetching recent tracks:', error);
         container.innerHTML = `
           <div class="not-playing">
             <i class="fa-solid fa-history"></i>
-            <p>No recently played tracks found</p>
+            <p>Unable to load recently played tracks</p>
           </div>
         `;
-        return;
+      }
+    }
+    
+    // Setup time range selector buttons
+    function setupTimeRangeButtons() {
+      const timeRangeButtons = document.querySelectorAll('.time-range-btn');
+      timeRangeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          // Remove active class from all buttons
+          timeRangeButtons.forEach(btn => btn.classList.remove('active'));
+          // Add active class to clicked button
+          this.classList.add('active');
+          // Fetch data for selected time range
+          fetchTopTracks(this.dataset.range);
+        });
+      });
+    }
+    
+    // Initialize function
+    function initialize() {
+      // Check if we're returning from auth
+      const urlParams = new URLSearchParams(window.location.search);
+      const isAuthSuccess = urlParams.get('success') === 'true';
+      const hasNotAttemptedAuth = !localStorage.getItem('spotify_auth_attempted');
+  
+      // Handle authentication
+      if (!isAuthSuccess && hasNotAttemptedAuth) {
+        // First time loading the page without auth - initiate Spotify login
+        localStorage.setItem('spotify_auth_attempted', 'true');
+        window.location.href = 'https://spotify-api-iota-one.vercel.app/login';
+      } else if (isAuthSuccess) {
+        // Successfully returned from authentication
+        console.log('Successfully authenticated with Spotify!');
+        localStorage.removeItem('spotify_auth_attempted');
       }
       
-      // Display recently played tracks
-      let html = `<div class="recent-tracks-grid">`;
+      // Clean up URL if it has query parameters
+      if (urlParams.has('success') || urlParams.has('error')) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
       
-      data.items.forEach(item => {
-        const track = item.track;
-        const artists = track.artists.map(artist => artist.name).join(', ');
-        const playedAt = formatDate(item.played_at);
-        
-        html += `
-          <div class="recent-track-item">
-            <div class="track-image">
-              <img src="${track.album.images[0].url}" alt="${track.name} album cover">
-            </div>
-            <div class="track-info">
-              <div class="track-name">${track.name}</div>
-              <div class="track-artist">${artists}</div>
-              <div class="track-played-at">Played ${playedAt}</div>
-            </div>
-            <a href="${track.external_urls.spotify}" target="_blank" class="track-link">
-              <i class="fa-brands fa-spotify"></i>
-            </a>
-          </div>
-        `;
+      // Load all data in parallel
+      Promise.all([
+        fetchNowPlaying().catch(err => console.error('Error in now playing:', err)),
+        fetchTopTracks('medium_term').catch(err => console.error('Error in top tracks:', err)),
+        fetchRecentTracks().catch(err => console.error('Error in recent tracks:', err))
+      ]).then(() => {
+        console.log('All Spotify data loaded');
+      }).catch(error => {
+        console.error('Error loading Spotify data:', error);
       });
       
-      html += `</div>`;
-      container.innerHTML = html;
-    } catch (error) {
-      console.error('Error fetching recent tracks:', error);
-      container.innerHTML = `
-        <div class="not-playing">
-          <i class="fa-solid fa-history"></i>
-          <p>Unable to load recently played tracks</p>
-        </div>
-      `;
-    }
-  }
-  
-  // -------------------------------------
-  // Setup UI interactions
-  // -------------------------------------
-  function setupTimeRangeButtons() {
-    const timeRangeButtons = document.querySelectorAll('.time-range-btn');
-    timeRangeButtons.forEach(button => {
-      button.addEventListener('click', function() {
-        // Remove active class from all buttons
-        timeRangeButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        this.classList.add('active');
-        // Fetch data for selected time range
-        fetchTopTracks(this.dataset.range);
-      });
-    });
-  }
-  
-  // -------------------------------------
-  // Initialization
-  // -------------------------------------
-  function initialize() {
-    // Check if we're returning from auth
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Clean up URL if it has query parameters
-    if (urlParams.has('success') || urlParams.has('error')) {
-      window.history.replaceState({}, document.title, window.location.pathname);
+      // Setup UI interactions
+      setupTimeRangeButtons();
+      
+      // Set up periodic refreshes
+      // Update currently playing every 30 seconds
+      setInterval(fetchNowPlaying, 30000);
+      
+      // Update recent tracks every minute
+      setInterval(fetchRecentTracks, 60000);
     }
     
-    // Load all data in parallel
-    Promise.all([
-      fetchNowPlaying().catch(err => console.error('Error in now playing:', err)),
-      fetchTopTracks('medium_term').catch(err => console.error('Error in top tracks:', err)),
-      fetchRecentTracks().catch(err => console.error('Error in recent tracks:', err))
-    ]).then(() => {
-      console.log('All Spotify data loaded');
-    }).catch(error => {
-      console.error('Error loading Spotify data:', error);
-    });
-    
-    // Setup UI interactions
-    setupTimeRangeButtons();
-    
-    // Set up periodic refreshes
-    // Update currently playing every 10 seconds
-    setInterval(fetchNowPlaying, 10000);
-    
-    // Update recent tracks every minute
-    setInterval(fetchRecentTracks, 60000);
-  }
-  
-  // Start loading everything
-  initialize();
-});
-</script>
+    // Start loading everything
+    initialize();
+  });
+  </script>
 
     
 

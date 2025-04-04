@@ -13,6 +13,7 @@
   flex-direction: column;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 0 20px;
 }
 
 .spotify-title-wrapper {
@@ -55,10 +56,12 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
-  margin: 0 5%;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 100%;
 }
 
-/* Container styles - consistent padding and styling */
+/* Container styles */
 .now-playing-container,
 .top-tracks-container,
 .recent-tracks-container {
@@ -70,7 +73,9 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* Container titles */
@@ -101,6 +106,7 @@
   text-align: center;
   font-family: "Press Start 2P";
   font-size: 0.8rem;
+  padding: 1rem;
 }
 
 .no-data {
@@ -116,7 +122,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
 }
 
@@ -143,6 +149,9 @@
   display: flex;
   gap: 3px;
   align-items: flex-end;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 12px;
 }
 
 .playing-indicator span {
@@ -187,17 +196,54 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  gap: 0.5rem;
+  gap: 0.8rem;
   font-family: "Press Start 2P";
+}
+
+/* Marquee effect for text scrolling */
+.track-name, 
+.track-artist,
+.now-playing-track,
+.now-playing-artist,
+.now-playing-album {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+/* Setup for marquee animation */
+.marquee {
+  position: relative;
+  overflow: hidden;
+}
+
+.marquee-content {
+  display: inline-block;
+  white-space: nowrap;
+  animation: marquee-scroll 8s linear infinite;
+  animation-play-state: paused;
+}
+
+.track-item:hover .marquee .marquee-content,
+.recent-track-item:hover .marquee .marquee-content,
+.now-playing-info:hover .marquee .marquee-content {
+  animation-play-state: running;
+}
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
 
 .now-playing-track {
   font-size: 1rem;
   color: #333;
   text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .now-playing-artist,
@@ -205,17 +251,88 @@
   font-size: 0.7rem;
   color: #666;
   text-align: center;
-  white-space: nowrap;
+}
+
+.now-playing-progress {
+  margin: 0.8rem 0;
+  width: 100%;
+}
+
+.progress-bar {
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
   overflow: hidden;
-  text-overflow: ellipsis;
+  margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, rgb(15, 31, 175), rgb(0, 157, 255));
+  border-radius: 3px;
+  width: 30%;
+}
+
+.progress-time {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  color: #888;
+}
+
+.listen-on-spotify {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: #1db954;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 50px;
+  font-size: 0.7rem;
+  text-decoration: none;
+  margin-top: 0.8rem;
+  transition: all 0.3s ease;
+}
+
+.listen-on-spotify:hover {
+  background-color: #1ed760;
+  transform: translateY(-2px);
+}
+
+.fa-spotify {
+  font-size: 1.2rem;
+}
+
+/* Not playing state */
+.not-playing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  padding: 3rem 0;
+  width: 100%;
+}
+
+.not-playing i {
+  font-size: 3.5rem;
+  color: #ddd;
+}
+
+.not-playing p {
+  font-family: "Press Start 2P";
+  font-size: 0.8rem;
+  color: #888;
+  text-align: center;
 }
 
 /* Top Tracks Section */
 .top-tracks-time-range {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  gap: 0.6rem;
+  margin-bottom: 1.8rem;
   flex-wrap: wrap;
   width: 100%;
 }
@@ -241,16 +358,16 @@
   color: white;
 }
 
-/* Tracks grid - improved layout */
+/* Fixed track grids */
 .tracks-grid,
 .recent-tracks-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1rem;
   width: 100%;
 }
 
-/* Track Item Styling - enhanced for better display */
+/* Track Item Styling */
 .track-item,
 .recent-track-item {
   display: flex;
@@ -262,6 +379,8 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
   width: 100%;
   box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .track-item:hover,
@@ -273,16 +392,17 @@
 
 .track-rank {
   flex-shrink: 0;
-  width: 30px;
+  width: 25px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #666;
   font-family: "Press Start 2P";
+  margin-right: 0.5rem;
 }
 
 .track-image {
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -304,28 +424,22 @@
 
 .track-name {
   font-family: "Press Start 2P";
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: #333;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.4rem;
 }
 
 .track-artist {
   font-family: "Press Start 2P";
-  font-size: 0.6rem;
+  font-size: 0.55rem;
   color: #666;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .track-played-at {
   font-family: "Press Start 2P";
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   color: #999;
-  margin-top: 0.25rem;
+  margin-top: 0.3rem;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -340,33 +454,12 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  margin-left: 0.5rem;
 }
 
 .track-link:hover {
   background-color: rgba(29, 185, 84, 0.1);
   transform: scale(1.1);
-}
-
-/* Not playing state */
-.not-playing {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem 0;
-}
-
-.not-playing i {
-  font-size: 3rem;
-  color: #ddd;
-}
-
-.not-playing p {
-  font-family: "Press Start 2P";
-  font-size: 0.8rem;
-  color: #888;
-  text-align: center;
 }
 
 /* Responsive Layouts */
@@ -385,11 +478,17 @@
   }
 
   .now-playing-info {
-    padding-left: 1rem;
+    padding-left: 1.5rem;
   }
 
   .spotify-title::after {
     width: 280px;
+  }
+  
+  .top-tracks-container,
+  .recent-tracks-container {
+    padding: 2rem;
+    min-width: 0; /* Prevent min-width from causing overflow */
   }
 }
 
@@ -403,6 +502,18 @@
   .spotify-title::after {
     width: 320px;
   }
+  
+  .now-playing-card {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .tracks-grid,
+  .recent-tracks-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -414,12 +525,13 @@
   .track-rank {
     width: 20px;
     font-size: 0.6rem;
+    margin-right: 0.3rem;
   }
 
   .track-image {
     width: 45px;
     height: 45px;
-    margin-right: 0.6rem;
+    margin-right: 0.8rem;
   }
 
   .track-name {
@@ -437,5 +549,11 @@
   .time-range-btn {
     font-size: 0.5rem;
     padding: 0.3rem 0.6rem;
+  }
+  
+  .now-playing-container,
+  .top-tracks-container,
+  .recent-tracks-container {
+    padding: 1rem;
   }
 }
