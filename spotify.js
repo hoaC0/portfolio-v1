@@ -26,13 +26,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Error display
-  function createErrorDisplay(icon, message, isAuthError = false) {
+  // Error display - removed auth button
+  function createErrorDisplay(icon, message) {
     return `
       <div class="not-playing">
         <i class="${icon}"></i>
         <p>${message}</p>
-        ${isAuthError ? '<button class="retry-spotify-btn">Noch einmal versuchen</button>' : ''}
       </div>
     `;
   }
@@ -105,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('currently-playing-track');
     
     // If there's no content yet, show loading
-    if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn')) {
+    if (!container.innerHTML.trim()) {
       showLoading(container);
     }
     
@@ -206,22 +205,20 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (error) {
       console.error('Error fetching current track:', error);
       
-      // Only show error if no content exists or if error display is already showing
-      if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-headphones')) {
+      // Only show error if no content exists
+      if (!container.innerHTML.trim() || container.innerHTML.includes('fa-headphones')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load currently playing track';
-        let isAuthError = false;
         
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
         } else if (error.response && error.response.status === 401) {
-          errorMessage = 'Authentication error. The site owner needs to log in again.';
-          isAuthError = true;
+          errorMessage = 'Authentication issue with Spotify API.';
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-headphones', errorMessage, isAuthError);
+        const errorContent = createErrorDisplay('fa-solid fa-headphones', errorMessage);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -232,7 +229,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('top-tracks');
     
     // If we already have this data cached, don't show loading
-    if (!topTracksCache[timeRange] || !container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn')) {
+    if (!topTracksCache[timeRange] || !container.innerHTML.trim()) {
       showLoading(container);
     }
     
@@ -314,22 +311,20 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (error) {
       console.error('Error fetching top tracks:', error);
       
-      // Only show error if no content exists or if error is already showing
-      if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-music')) {
+      // Only show error if no content exists
+      if (!container.innerHTML.trim() || container.innerHTML.includes('fa-music')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load top tracks';
-        let isAuthError = false;
         
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
         } else if (error.response && error.response.status === 401) {
-          errorMessage = 'Authentication error. The site owner needs to log in again.';
-          isAuthError = true;
+          errorMessage = 'Authentication issue with Spotify API.';
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-music', errorMessage, isAuthError);
+        const errorContent = createErrorDisplay('fa-solid fa-music', errorMessage);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -340,7 +335,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const container = document.getElementById('recent-tracks');
     
     // If there's no content yet, show loading
-    if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn')) {
+    if (!container.innerHTML.trim()) {
       showLoading(container);
     }
     
@@ -438,22 +433,20 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch (error) {
       console.error('Error fetching recently played tracks:', error);
       
-      // Only show error if no content exists or error is already showing
-      if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-history')) {
+      // Only show error if no content exists
+      if (!container.innerHTML.trim() || container.innerHTML.includes('fa-history')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load recently played tracks';
-        let isAuthError = false;
         
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
         } else if (error.message.includes('401')) {
-          errorMessage = 'Authentication error. The site owner needs to log in again.';
-          isAuthError = true;
+          errorMessage = 'Authentication issue with Spotify API.';
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-history', errorMessage, isAuthError);
+        const errorContent = createErrorDisplay('fa-solid fa-history', errorMessage);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -500,41 +493,20 @@ document.addEventListener('DOMContentLoaded', function() {
     document.head.appendChild(styleEl);
   }
   
-  // Improved initialization function
+  // Simplified initialization function - no authentication redirect
   function initialize() {
     console.log('Initializing Spotify integration...');
     addTransitionStyles();
     
     // Clean up URL if it has query parameters
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('success') || urlParams.has('error')) {
+    if (window.location.search) {
       window.history.replaceState({}, document.title, window.location.pathname);
     }
     
-    // Check if we need to retry authentication
-    const authError = urlParams.get('error');
-    if (authError) {
-      console.error('Authentication error:', authError);
-      localStorage.removeItem('spotify_auth_attempted');
-    }
+    // Remove any authentication attempts from localStorage
+    localStorage.removeItem('spotify_auth_attempted');
     
-    // Check if we're returning from auth
-    const isAuthSuccess = urlParams.get('success') === 'true';
-    const hasNotAttemptedAuth = !localStorage.getItem('spotify_auth_attempted');
-
-    // Handle authentication
-    if (!isAuthSuccess && hasNotAttemptedAuth) {
-      // First time loading the page without auth - initiate Spotify login
-      localStorage.setItem('spotify_auth_attempted', 'true');
-      window.location.href = `${API_BASE_URL}/login`;
-      return; // Stop execution since we're redirecting
-    } else if (isAuthSuccess) {
-      // Successfully returned from authentication
-      console.log('Successfully authenticated with Spotify!');
-      localStorage.removeItem('spotify_auth_attempted');
-    }
-    
-    // Load all data in parallel with error handling
+    // Load all Spotify data directly
     Promise.allSettled([
       fetchNowPlaying(),
       fetchTopTracks('medium_term'),
@@ -543,29 +515,6 @@ document.addEventListener('DOMContentLoaded', function() {
       // Count how many requests succeeded
       const successCount = results.filter(r => r.status === 'fulfilled').length;
       console.log(`Spotify data loaded: ${successCount}/${results.length} requests succeeded`);
-      
-      // If all failed, we might need to re-authenticate
-      if (successCount === 0) {
-        console.warn('All Spotify requests failed. Might need to re-authenticate.');
-        const allContainers = [
-          document.getElementById('currently-playing-track'),
-          document.getElementById('top-tracks'),
-          document.getElementById('recent-tracks')
-        ];
-        
-        // Add retry button to containers
-        allContainers.forEach(container => {
-          if (container) {
-            container.innerHTML = `
-              <div class="not-playing">
-                <i class="fa-solid fa-exclamation-triangle"></i>
-                <p>Spotify-Daten konnten nicht geladen werden.</p>
-                <button class="retry-spotify-btn">Noch einmal versuchen</button>
-              </div>
-            `;
-          }
-        });
-      }
     }).catch(error => {
       console.error('Error in Promise.allSettled:', error);
     });
@@ -573,34 +522,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup UI interactions
     setupTimeRangeButtons();
     
-    // Setup event listener for retry buttons
-    document.addEventListener('click', function(e) {
-      if (e.target && e.target.classList.contains('retry-spotify-btn')) {
-        console.log('Retry button clicked');
-        // Zeige sofort Lade-Indikatoren an
-        const containers = [
-          document.getElementById('currently-playing-track'),
-          document.getElementById('top-tracks'),
-          document.getElementById('recent-tracks')
-        ];
-        
-        containers.forEach(container => {
-          if (container) {
-            showLoading(container);
-          }
-        });
-        
-        // Gehe zur Login-Seite
-        localStorage.removeItem('spotify_auth_attempted');
-        window.location.href = `${API_BASE_URL}/login`;
-      }
-    });
-    
+    // Set up polling intervals with jitter
     const addJitter = (baseTime) => baseTime + (Math.random() * 500);
-
-setInterval(fetchNowPlaying, addJitter(2000));
-setInterval(fetchTopTracks, addJitter(60000)); 
-setInterval(fetchRecentTracks, addJitter(10000));;
+    setInterval(fetchNowPlaying, addJitter(2000));
+    setInterval(fetchTopTracks, addJitter(60000)); 
+    setInterval(fetchRecentTracks, addJitter(10000));
   }
   
   // Start everything when the DOM is ready
