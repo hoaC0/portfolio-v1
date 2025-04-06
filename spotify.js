@@ -27,11 +27,12 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // Error display
-  function createErrorDisplay(icon, message) {
+  function createErrorDisplay(icon, message, isAuthError = false) {
     return `
       <div class="not-playing">
         <i class="${icon}"></i>
         <p>${message}</p>
+        ${isAuthError ? '<button class="retry-spotify-btn">Noch einmal versuchen</button>' : ''}
       </div>
     `;
   }
@@ -209,13 +210,18 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-headphones')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load currently playing track';
+        let isAuthError = false;
+        
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
+        } else if (error.response && error.response.status === 401) {
+          errorMessage = 'Authentication error. The site owner needs to log in again.';
+          isAuthError = true;
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-headphones', errorMessage);
+        const errorContent = createErrorDisplay('fa-solid fa-headphones', errorMessage, isAuthError);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -312,13 +318,18 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-music')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load top tracks';
+        let isAuthError = false;
+        
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
+        } else if (error.response && error.response.status === 401) {
+          errorMessage = 'Authentication error. The site owner needs to log in again.';
+          isAuthError = true;
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-music', errorMessage);
+        const errorContent = createErrorDisplay('fa-solid fa-music', errorMessage, isAuthError);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -431,15 +442,18 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!container.innerHTML.trim() || container.innerHTML.includes('retry-spotify-btn') || container.innerHTML.includes('fa-history')) {
         // Specific error message based on error type
         let errorMessage = 'Unable to load recently played tracks';
+        let isAuthError = false;
+        
         if (error.name === 'AbortError') {
           errorMessage = 'Request timed out. Please refresh the page.';
         } else if (error.message.includes('Failed to fetch')) {
           errorMessage = 'Network error. Please check your connection.';
         } else if (error.message.includes('401')) {
-          errorMessage = 'Authentication error. Please try again later.';
+          errorMessage = 'Authentication error. The site owner needs to log in again.';
+          isAuthError = true;
         }
         
-        const errorContent = createErrorDisplay('fa-solid fa-history', errorMessage);
+        const errorContent = createErrorDisplay('fa-solid fa-history', errorMessage, isAuthError);
         updateContainerWithFade(container, errorContent);
       }
     }
@@ -531,7 +545,7 @@ document.addEventListener('DOMContentLoaded', function() {
       console.log(`Spotify data loaded: ${successCount}/${results.length} requests succeeded`);
       
       // If all failed, we might need to re-authenticate
-      if (successCount === a0) {
+      if (successCount === 0) {
         console.warn('All Spotify requests failed. Might need to re-authenticate.');
         const allContainers = [
           document.getElementById('currently-playing-track'),
@@ -545,19 +559,11 @@ document.addEventListener('DOMContentLoaded', function() {
             container.innerHTML = `
               <div class="not-playing">
                 <i class="fa-solid fa-exclamation-triangle"></i>
-                <p>Unable to load Spotify data</p>
-                <button class="retry-spotify-btn">Try Again</button>
+                <p>Spotify-Daten konnten nicht geladen werden.</p>
+                <button class="retry-spotify-btn">Noch einmal versuchen</button>
               </div>
             `;
           }
-        });
-        
-        // Add event listener to retry buttons
-        document.querySelectorAll('.retry-spotify-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            localStorage.removeItem('spotify_auth_attempted');
-            window.location.href = `${API_BASE_URL}/login`;
-          });
         });
       }
     }).catch(error => {
@@ -567,11 +573,34 @@ document.addEventListener('DOMContentLoaded', function() {
     // Setup UI interactions
     setupTimeRangeButtons();
     
+    // Setup event listener for retry buttons
+    document.addEventListener('click', function(e) {
+      if (e.target && e.target.classList.contains('retry-spotify-btn')) {
+        console.log('Retry button clicked');
+        // Zeige sofort Lade-Indikatoren an
+        const containers = [
+          document.getElementById('currently-playing-track'),
+          document.getElementById('top-tracks'),
+          document.getElementById('recent-tracks')
+        ];
+        
+        containers.forEach(container => {
+          if (container) {
+            showLoading(container);
+          }
+        });
+        
+        // Gehe zur Login-Seite
+        localStorage.removeItem('spotify_auth_attempted');
+        window.location.href = `${API_BASE_URL}/login`;
+      }
+    });
+    
     const addJitter = (baseTime) => baseTime + (Math.random() * 500);
 
-setInterval(fetchNowPlaying, addJitter(1000));
-setInterval(fetchTopTracks, addJitter(5000));
-setInterval(fetchRecentTracks, addJitter(5000));
+setInterval(fetchNowPlaying, addJitter(2000));
+setInterval(fetchTopTracks, addJitter(60000)); 
+setInterval(fetchRecentTracks, addJitter(10000));;
   }
   
   // Start everything when the DOM is ready
