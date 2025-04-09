@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', function() {
   // API base URL of your proxy server
   const API_BASE_URL = 'https://spotify-api-iota-one.vercel.app';
   
-  // Helper functions
   function truncateText(text, maxLength) {
     if (!text) return '';
     if (text.length <= maxLength) return text;
