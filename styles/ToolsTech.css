@@ -125,7 +125,6 @@
         font-size: 0.9rem;
     }
     
-    /* Make underline wider on large screens */
     .tooltech_title::after {
         width: 320px;
     }
