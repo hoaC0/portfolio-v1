@@ -1,414 +1,468 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hoa Chau</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- font -->
-    <link rel="stylesheet" href="styles/stylesheet.css">
-    <link rel="stylesheet" href="styles/nav.css">
-    <link rel="stylesheet" href="styles/home.css">
-    <link rel="stylesheet" href="styles/about.css">
-    <link rel="stylesheet" href="styles/ToolsTech.css">
-    <link rel="stylesheet" href="styles/project.css">
-    <link rel="stylesheet" href="styles/contact.css">
-    <link rel="stylesheet" href="styles/spotify.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hoa Chau</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> <!-- font -->
+  <link rel="stylesheet" href="styles/stylesheet.css">
+  <link rel="stylesheet" href="styles/nav.css">
+  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="styles/about.css">
+  <link rel="stylesheet" href="styles/ToolsTech.css">
+  <link rel="stylesheet" href="styles/project.css">
+  <link rel="stylesheet" href="styles/contact.css">
+  <link rel="stylesheet" href="styles/spotify.css">
 </head>
 
 <body>
-    
-    <!-- header  -->
-    <header>
-      <nav>
-        <div class="navbar">
-          <div class="logo"> &lt; Hoa Chau/&gt; </div> <!-- logo -->
-          <div class="navigation-links">
-            <ul class="navigation">
-              <li><a href="#intro" class="navlink"> Home </a></li>
-              <li><a href="#about" class="navlink"> About </a></li> <!-- about me -->
-              <li><a href="#project" class="navlink"> Projects</a></li> <!-- projects -->
-              <li><a href="#contact" class="navlink"> Contact </a></li> <!-- contact me -->
-            </ul>
-          
-            
-              <!-- dark mode button -->
-              
-            </button>
-          </div>
+
+  <!-- header  -->
+  <header>
+    <nav>
+      <div class="navbar">
+        <div class="logo"> &lt; Hoa Chau/&gt; </div> <!-- logo -->
+        <div class="navigation-links">
+          <ul class="navigation">
+            <li><a href="#intro" class="navlink"> Home </a></li>
+            <li><a href="#about" class="navlink"> About </a></li> <!-- about me -->
+            <li><a href="#project" class="navlink"> Projects</a></li> <!-- projects -->
+            <li><a href="#contact" class="navlink"> Contact </a></li> <!-- contact me -->
+          </ul>
+
+
+          <!-- dark mode button -->
+
+          </button>
         </div>
-      </nav>
-    </header>
+      </div>
+    </nav>
+  </header>
 
-    <!-- main -->
-    <main>
-      <div class="background"></div>
+  <!-- main -->
+  <main>
+    <div class="background"></div>
 
-      <!-- intro -->
-      <section class="intro" id="intro">
-        <div class="container">
-          <h1 class="Hi">Hey there,I'm Hoa</h1>
-          <p class="iAM">I am a student, aiming to <br>become a <span id="text">software developer</span><span id="cursor">|</span></p>
-          <a href="./file/Lebenslauf.pdf" target="_blank" class="btn">Resume</a>
-        </div>
-        <div class="placeholder1"></div>
-      </section>
-    </main>
+    <!-- intro -->
+    <section class="intro" id="intro">
+      <div class="container">
+        <h1 class="Hi">Hey there,I'm Hoa</h1>
+        <p class="iAM">I am a student, aiming to <br>become a <span id="text">software developer</span><span
+            id="cursor">|</span></p>
+        <a href="./file/Lebenslauf.pdf" target="_blank" class="btn">Resume</a>
+      </div>
+      <div class="placeholder1"></div>
+    </section>
+  </main>
 
-    <script>
-      const textElement = document.getElementById("text");
-      const cursorElement = document.getElementById("cursor");
-      const phrases = ["Software Developer", "Software Engineer", "Web Developer"];
-      let currentPhraseIndex = 0;
-      let currentCharIndex = 0;
-      let isDeleting = false;
-      const typingSpeed = 150; // milliseconds per character when typing
-      const deletingSpeed = 100; // milliseconds per character when deleting
-      const pauseTime = 1000; // pause time in milliseconds before deleting
-  
-      function type() {
-        const currentPhrase = phrases[currentPhraseIndex];
-        
-        if (isDeleting) {
-          // removes characters
-          textElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
-          currentCharIndex--;
-  
-          if (currentCharIndex === 0) {
-            isDeleting = false;
-            currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
-            setTimeout(type, typingSpeed);
-          } else {
-            setTimeout(type, deletingSpeed);
-          }
+  <script>
+    const textElement = document.getElementById("text");
+    const cursorElement = document.getElementById("cursor");
+    const phrases = ["Software Developer", "Software Engineer", "Web Developer"];
+    let currentPhraseIndex = 0;
+    let currentCharIndex = 0;
+    let isDeleting = false;
+    const typingSpeed = 150; // milliseconds per character when typing
+    const deletingSpeed = 100; // milliseconds per character when deleting
+    const pauseTime = 1000; // pause time in milliseconds before deleting
+
+    function type() {
+      const currentPhrase = phrases[currentPhraseIndex];
+
+      if (isDeleting) {
+        // removes characters
+        textElement.textContent = currentPhrase.substring(0, currentCharIndex - 1);
+        currentCharIndex--;
+
+        if (currentCharIndex === 0) {
+          isDeleting = false;
+          currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+          setTimeout(type, typingSpeed);
         } else {
-          // adds characters
-          textElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
-          currentCharIndex++;
-  
-          if (currentCharIndex === currentPhrase.length) {
-            isDeleting = true;
-            setTimeout(type, pauseTime);
-          } else {
-            setTimeout(type, typingSpeed);
-          }
+          setTimeout(type, deletingSpeed);
+        }
+      } else {
+        // adds characters
+        textElement.textContent = currentPhrase.substring(0, currentCharIndex + 1);
+        currentCharIndex++;
+
+        if (currentCharIndex === currentPhrase.length) {
+          isDeleting = true;
+          setTimeout(type, pauseTime);
+        } else {
+          setTimeout(type, typingSpeed);
         }
       }
-  
-      function blinkCursor() {
-        cursorElement.style.visibility = cursorElement.style.visibility === 'visible' ? 'hidden' : 'visible';
-      }
-  
-      // start the typing effect and cursor blinking
-      type();
-      setInterval(blinkCursor, 500); // blinking cursor every 500 ms
-    </script>
-  
+    }
 
-    <!-- About Me -->
-    <section class="about" id="about">
-      <div class="aboutme">
-        <div class="aboutme_title_wrapper"><h2 class="aboutme_title">About me</h2></div> <!-- section title-->
-        <div class="aboutmeHI_wrapper"><p class="aboutmeHI">Hi!</p></div>
-        <div class="aboutme_text_wrapper"><p class="aboutme_text">
-          I'm Hoa Chau, a passionate student and developer who loves not only technology but also creating and learning new things about it.
+    function blinkCursor() {
+      cursorElement.style.visibility = cursorElement.style.visibility === 'visible' ? 'hidden' : 'visible';
+    }
+
+    // start the typing effect and cursor blinking
+    type();
+    setInterval(blinkCursor, 500); // blinking cursor every 500 ms
+  </script>
+
+
+  <section class="about" id="about">
+    <div class="aboutme">
+      <div class="aboutme_title_wrapper">
+        <h2 class="aboutme_title">About me</h2>
+      </div> <!-- section title-->
+      <div class="aboutmeHI_wrapper">
+        <p class="aboutmeHI">Hi!</p>
+      </div>
+      <div class="aboutme_text_wrapper">
+        <p class="aboutme_text">
+          I'm Hoa Chau, a passionate software developer who loves not only technology but also creating and learning new
+          things about it.
           I love creating my own projects, challenge myself and learn new things.
-          Currently, I am a student in Computer Science at Bernd-Blindow-Schulen in Friedrichshafen(Germany), so I can do something 
-          I am passionate about.<br><br>
-          
+          Currently, I am completing my internship as a Software Developer at VEGA Grieshaber KG in Schiltach, Germany,
+          where I work with Angular, TypeScript, C# ASP.NET, and modern development practices.<br><br>
+          I am passionate about web development and modern frontend technologies.
+
           I started being interested in video games when I was just a little child, and eventually,
           I built my very first computer at the age of 16. My fascination extended beyond hardware to software.
-          I began editing pictures and videos, which sparked my interest in programming and web development. 
-          What started as a hobby has now become my field of study. 
+          I began editing pictures and videos, which sparked my interest in programming and web development.
+          What started as a hobby has now become my field of work.
           Recently, I have also developed a growing interest in AI.
           <br><br>
           When I'm not coding or studying, I also enjoy playing video games, working out and cooking.
-        </p></div>
-        
-        <div class="images">
-          <div class="image"><img class="videogame" src="./images/videogame.avif" alt=""></div>
-          <div class="image"><img class="cooking" src="./images/cooking.avif" alt=""></div>
+        </p>
+      </div>
+
+      <div class="images">
+        <div class="image"><img class="videogame" src="./images/videogame.avif" alt=""></div>
+        <div class="image"><img class="cooking" src="./images/cooking.avif" alt=""></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- My Tools and Techs -->
+  <!-- My Tools and Techs -->
+  <section class="ToolsTech">
+    <div class="tooltech_wrapper">
+      <div class="tooltech_title_wrapper">
+        <h2 class="tooltech_title">My Tools and Technologies</h2>
+      </div>
+
+
+
+      <!-- Technologies grid -->
+      <div class="tech">
+        <div class="tool-wrapper" data-category="frontend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">HTML</div>
         </div>
-        
-      </div>
-    </section>
 
-    <!-- My Tools and Techs -->
-<!-- My Tools and Techs -->
-<section class="ToolsTech">
-  <div class="tooltech_wrapper">
-    <div class="tooltech_title_wrapper">
-      <h2 class="tooltech_title">My Tools and Technologies</h2>
-    </div>
-    
-  
-    
-    <!-- Technologies grid -->
-    <div class="tech"> 
-      <div class="tool-wrapper" data-category="frontend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" class="tool-image"/>
-        <div class="tool-tech">HTML</div>
-      </div>
-      
-      <div class="tool-wrapper" data-category="frontend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" class="tool-image"/>
-        <div class="tool-tech">CSS</div>
-      </div>
+        <div class="tool-wrapper" data-category="frontend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">CSS</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="frontend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" class="tool-image"/>
-        <div class="tool-tech">JavaScript</div>
-      </div>
+        <div class="tool-wrapper" data-category="frontend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">JavaScript</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="frontend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" class="tool-image"/>
-        <div class="tool-tech">React.js</div>
-      </div>
+        <div class="tool-wrapper" data-category="frontend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">React.js</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="frontend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg" class="tool-image"/>
-        <div class="tool-tech">Angular.js</div>
-      </div>
+        <div class="tool-wrapper" data-category="frontend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/angular/angular-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Angular.js</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg" class="tool-image"/>
-        <div class="tool-tech">Node.js</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original-wordmark.svg"
+            class="tool-image" />
+          <div class="tool-tech">Node.js</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg" class="tool-image"/>
-        <div class="tool-tech">Express.js</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Express.js</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" class="tool-image"/>
-        <div class="tool-tech">C</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg" class="tool-image" />
+          <div class="tool-tech">C</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" class="tool-image"/>
-        <div class="tool-tech">C++</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">C++</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg" class="tool-image"/>
-        <div class="tool-tech">Bash</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bash/bash-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Bash</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="mobile">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg" class="tool-image"/>
-        <div class="tool-tech">Dart</div>
-      </div>
-      
-      <div class="tool-wrapper" data-category="mobile">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg" class="tool-image"/>
-        <div class="tool-tech">Flutter</div>
-      </div>
+        <div class="tool-wrapper" data-category="mobile">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dart/dart-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Dart</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg" class="tool-image"/>
-        <div class="tool-tech">Firebase</div>
-      </div>
+        <div class="tool-wrapper" data-category="mobile">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/flutter/flutter-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Flutter</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="backend">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg" class="tool-image"/>
-        <div class="tool-tech">MySQL</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Firebase</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="tools">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" class="tool-image"/>
-        <div class="tool-tech">Git</div>
-      </div>
+        <div class="tool-wrapper" data-category="backend">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original-wordmark.svg"
+            class="tool-image" />
+          <div class="tool-tech">MySQL</div>
+        </div>
 
-      <div class="tool-wrapper" data-category="tools">
-        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg" class="tool-image"/>
-        <div class="tool-tech">GitHub</div>
+        <div class="tool-wrapper" data-category="tools">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">Git</div>
+        </div>
+
+        <div class="tool-wrapper" data-category="tools">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg"
+            class="tool-image" />
+          <div class="tool-tech">GitHub</div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-    <!-- Projects -->
-    <section class="project" id="project">
-      <h2 class="project-title">Projects</h2> <!-- section title-->
-      <div class="project-container">
+  <!-- Projects -->
+  <section class="project" id="project">
+    <h2 class="project-title">Projects</h2> <!-- section title-->
+    <div class="project-container">
       <h2 class="project-latest">What I have built recently...</h2>
-        <div class="project-grid">
+      <div class="project-grid">
 
-          <div class="project-wrapper"><img src="./images/BlindowTime.png" alt="" class="project-img"><div class="project-txt">BlindowTime</div>
-          <div class="project-description">A platform developed with JavaScript, React, MySQL, Node.js, and GP Untis that allows students and teachers to view schedules and updates in real time. Important notifications are displayed directly, while the administration can efficiently manage and update schedules and rooms through a dedicated dashboard.</div>
+        <div class="project-wrapper"><img src="./images/BlindowTime.png" alt="" class="project-img">
+          <div class="project-txt">BlindowTime</div>
+          <div class="project-description">A platform developed with JavaScript, React, MySQL, Node.js, and GP Untis
+            that allows students and teachers to view schedules and updates in real time. Important notifications are
+            displayed directly, while the administration can efficiently manage and update schedules and rooms through a
+            dedicated dashboard.</div>
           <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
+        </div>
 
-          <div class="project-wrapper"><img src="./images/RecipeShuffle.png" alt="" class="project-img"><div class="project-txt">RecipeShuffle</div>
-          <div class="project-description">A simple recipe web app, built with React, JavaScript, MySQL and Node.js. It allows users to create, share and save their favorite recipes. You don't know what to cook? Shuffle your recipes for the week!</div>
+        <div class="project-wrapper"><img src="./images/RecipeShuffle.png" alt="" class="project-img">
+          <div class="project-txt">RecipeShuffle</div>
+          <div class="project-description">A simple recipe web app, built with React, JavaScript, MySQL and Node.js. It
+            allows users to create, share and save their favorite recipes. You don't know what to cook? Shuffle your
+            recipes for the week!</div>
           <a href="https://github.com/hoaC0/RecipeShuffle" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
+        </div>
 
-          <div class="project-wrapper">
+        <div class="project-wrapper">
           <img src="./images/Kniffel.png" alt="Kniffel / Yahtzee Game" class="project-img">
           <div class="project-txt">Kniffel / Yahtzee</div>
           <div class="project-description">
-          A dice game, built in C++ using object-oriented programming principles. This project focuses on game logic, player interactions, random number generation, and applying OOP concepts such as classes and inheritance.
+            A dice game, built in C++ using object-oriented programming principles. This project focuses on game logic,
+            player interactions, random number generation, and applying OOP concepts such as classes and inheritance.
           </div>
           <a href="https://github.com/hoaC0/Kniffel" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
+        </div>
 
-          <div class="project-wrapper"><img src="./images/practice-portfolio.png" alt="" class="project-img"><div class="project-txt">Practice Portfolio Website</div>
-          <div class="project-description">A simple portfolio site I put together to practice my HTML and CSS skills. It's got the basics - a spot for projects, my skills and a contact form</div>
+        <div class="project-wrapper"><img src="./images/practice-portfolio.png" alt="" class="project-img">
+          <div class="project-txt">Practice Portfolio Website</div>
+          <div class="project-description">A simple portfolio site I put together to practice my HTML and CSS skills.
+            It's got the basics - a spot for projects, my skills and a contact form</div>
           <a href="https://github.com/hoaC0/practice-portfolio" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
+        </div>
 
-          <div class="project-wrapper"><img src="./images/to-do.png" alt="" class="project-img"><div class="project-txt">To Do List</div>
-          <div class="project-description">An aesthetically pleasing to-do list app I built using HTML, CSS, and JavaScript. You can add tasks, mark them as done, edit them and clear completed ones.</div>
+        <div class="project-wrapper"><img src="./images/to-do.png" alt="" class="project-img">
+          <div class="project-txt">To Do List</div>
+          <div class="project-description">An aesthetically pleasing to-do list app I built using HTML, CSS, and
+            JavaScript. You can add tasks, mark them as done, edit them and clear completed ones.</div>
           <a href="https://github.com/hoaC0/to-do-list-app" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
+        </div>
 
-          <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img"><div class="project-txt">Empty</div>
-          <div class="project-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ipsam repellendus? Magni non eaque aperiam at illo dignissimos eveniet modi possimus nisi assumenda minus unde aspernatur, fugit quas cumque repellat!</div>
+        <div class="project-wrapper"><img src="./images/placeholder.webp" alt="" class="project-img">
+          <div class="project-txt">Empty</div>
+          <div class="project-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit, ipsam
+            repellendus? Magni non eaque aperiam at illo dignissimos eveniet modi possimus nisi assumenda minus unde
+            aspernatur, fugit quas cumque repellat!</div>
           <a href="https://github.com/hoaC0/project1" target="_blank" class="project-github-link">
-          <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a></div>
-        
+            <img src="./images/coding.png" alt="View code on GitHub" class="coding-icon"></a>
         </div>
-      </div>
-    </section>
-    
-    
 
-<!-- Spotify Section -->
-<section class="spotify" id="spotify">
-  <div class="spotify-wrapper">
-    <div class="spotify-title-wrapper">
-      <h2 class="spotify-title">My Music</h2>
-    </div>
-    
-    <div class="spotify-content">
-      <!-- Now Playing Widget -->
-      <div class="now-playing-container" id="now-playing">
-        <div class="now-playing-title">Currently Playing</div>
-        <div class="now-playing-content" id="currently-playing-track">
-          <div class="spotify-loading">Loading...</div>
-        </div>
-      </div>
-      
-      <!-- Top Tracks Widget -->
-      <div class="top-tracks-container">
-        <div class="top-tracks-title">My Top Tracks</div>
-        <div class="top-tracks-time-range">
-          <button class="time-range-btn active" data-range="short_term">Last Month</button>
-          <button class="time-range-btn" data-range="medium_term">Last 6 Months</button>
-          <button class="time-range-btn" data-range="long_term">All Time</button>
-        </div>
-        <div class="top-tracks-list" id="top-tracks">
-          <div class="spotify-loading">Loading...</div>
-        </div>
-      </div>
-      
-      <!-- Recently Played Widget -->
-      <div class="recent-tracks-container">
-        <div class="recent-tracks-title">Recently Played</div>
-        <div class="recent-tracks-list" id="recent-tracks">
-          <div class="spotify-loading">Loading...</div>
-        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
-<script src="spotify.js"></script>
 
-    
+  <!-- Spotify Section -->
+  <section class="spotify" id="spotify">
+    <div class="spotify-wrapper">
+      <div class="spotify-title-wrapper">
+        <h2 class="spotify-title">My Music</h2>
+      </div>
 
-    <!-- footer -->
-    <footer id="contact">
-      <h2 class="contact-title">Contact</h2>
-      
-      <div class="contact-wrapper">
-        <div class="form">
-          <h3 class="form-title">Drop a message!</h3>
-          <!-- form -->
-          <div class="form-inputs">
-            <!-- https://web3forms.com-->
-            <form action="https://api.web3forms.com/submit" method="POST">
+      <div class="spotify-content">
+        <!-- Now Playing Widget -->
+        <div class="now-playing-container" id="now-playing">
+          <div class="now-playing-title">Currently Playing</div>
+          <div class="now-playing-content" id="currently-playing-track">
+            <div class="spotify-loading">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Top Tracks Widget -->
+        <div class="top-tracks-container">
+          <div class="top-tracks-title">My Top Tracks</div>
+          <div class="top-tracks-time-range">
+            <button class="time-range-btn active" data-range="short_term">Last Month</button>
+            <button class="time-range-btn" data-range="medium_term">Last 6 Months</button>
+            <button class="time-range-btn" data-range="long_term">All Time</button>
+          </div>
+          <div class="top-tracks-list" id="top-tracks">
+            <div class="spotify-loading">Loading...</div>
+          </div>
+        </div>
+
+        <!-- Recently Played Widget -->
+        <div class="recent-tracks-container">
+          <div class="recent-tracks-title">Recently Played</div>
+          <div class="recent-tracks-list" id="recent-tracks">
+            <div class="spotify-loading">Loading...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <script src="spotify.js"></script>
+
+
+
+  <!-- footer -->
+  <footer id="contact">
+    <h2 class="contact-title">Contact</h2>
+
+    <div class="contact-wrapper">
+      <div class="form">
+        <h3 class="form-title">Drop a message!</h3>
+        <!-- form -->
+        <div class="form-inputs">
+          <!-- https://web3forms.com-->
+          <form action="https://api.web3forms.com/submit" method="POST">
             <input type="hidden" name="access_key" value="b842bb85-bd1e-40b2-a462-5cb50ea4cac2">
             <input type="text" placeholder="Name" name="name" class="form-input" required>
             <input type="email" placeholder="Email" name="email" class="form-input" required>
             <textarea placeholder="Your message" name="message" class="form-input" required></textarea>
-            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">  <!-- Honeypot Spam Protection -->
+            <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+            <!-- Honeypot Spam Protection -->
 
             <!-- Custom Confirmation / Success Page -->
             <!-- <input type="hidden" name="redirect" value="https://mywebsite.com/thanks.html"> -->
 
             <button type="submit" class="form-submit">Send Message</button>
-            </form>
+          </form>
 
-          </div>
-        </div>
-    
-        <div class="social-media">
-          <a href="https://stackoverflow.com/users/27668026/hoa-chau" target="_blank" class="social-media-link"><i class="fa-brands fa-stack-overflow social-media-icon"></i></a>
-          <a href="https://github.com/hoaC0" target="_blank" class="social-media-link"><i class="fa-brands fa-github social-media-icon"></i></a>
-          <a href="https://discord.com/channels/@me" class="social-media-link"><i class="fa-brands fa-discord social-media-icon"></i></a>
-          <a href="www.linkedin.com/" target="_blank" class="social-media-link"><i class="fa-brands fa-linkedin-in social-media-icon"></i></a>
-          <a href="https://www.instagram.com/ch.hxa/" target="_blank" class="social-media-link"><i class="fa-brands fa-instagram social-media-icon" ></i></a>
-          <a href="mailto:hoachau1010@gmail.com" target="_blank" class="social-media-link"><i class="fa-regular fa-envelope social-media-icon"></i></a>
         </div>
       </div>
-    
-      <p class="copyright">&copy; 2025 Hoa Chau. All rights reserved.</p>
-    </footer>
 
-    <script>
-      // script
-      document.addEventListener('DOMContentLoaded', function() {
+      <div class="social-media">
+        <a href="https://stackoverflow.com/users/27668026/hoa-chau" target="_blank" class="social-media-link"><i
+            class="fa-brands fa-stack-overflow social-media-icon"></i></a>
+        <a href="https://github.com/hoaC0" target="_blank" class="social-media-link"><i
+            class="fa-brands fa-github social-media-icon"></i></a>
+        <a href="https://discord.com/channels/@me" class="social-media-link"><i
+            class="fa-brands fa-discord social-media-icon"></i></a>
+        <a href="www.linkedin.com/" target="_blank" class="social-media-link"><i
+            class="fa-brands fa-linkedin-in social-media-icon"></i></a>
+        <a href="https://www.instagram.com/ch.hxa/" target="_blank" class="social-media-link"><i
+            class="fa-brands fa-instagram social-media-icon"></i></a>
+        <a href="mailto:hoachau1010@gmail.com" target="_blank" class="social-media-link"><i
+            class="fa-regular fa-envelope social-media-icon"></i></a>
+      </div>
+    </div>
+
+    <p class="copyright">&copy; 2025 Hoa Chau. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // script
+    document.addEventListener('DOMContentLoaded', function () {
       // copyright element
       const copyrightElement = document.querySelector('.copyright');
-  
+
       if (copyrightElement) {
-      // get current yr
-      const currentYear = new Date().getFullYear();
-    
-      // updates text
-      copyrightElement.innerHTML = `&copy; ${currentYear} Hoa Chau. All rights reserved.`;
-        }
-      });
-    </script>
+        // get current yr
+        const currentYear = new Date().getFullYear();
+
+        // updates text
+        copyrightElement.innerHTML = `&copy; ${currentYear} Hoa Chau. All rights reserved.`;
+      }
+    });
+  </script>
 
 
-    <script>
-      // smooth animations nav buttons
-      document.addEventListener('DOMContentLoaded', function() {
+  <script>
+    // smooth animations nav buttons
+    document.addEventListener('DOMContentLoaded', function () {
       const navLinks = document.querySelectorAll('a.navlink[href^="#"]');
       const headerHeight = document.querySelector('header').offsetHeight;
-      
+
       navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
           e.preventDefault();
           const targetId = this.getAttribute('href');
           const targetElement = document.querySelector(targetId);
-          
+
           if (targetElement) {
             const targetPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = targetPosition + window.pageYOffset - headerHeight;
-            
+
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
             });
-            
+
             history.pushState(null, null, targetId);
           }
         });
       });
-      
+
       if (window.location.hash) {
-        setTimeout(function() {
+        setTimeout(function () {
           const targetElement = document.querySelector(window.location.hash);
           if (targetElement) {
             const targetPosition = targetElement.getBoundingClientRect().top;
             const offsetPosition = targetPosition + window.pageYOffset - headerHeight;
-            
+
             window.scrollTo({
               top: offsetPosition,
               behavior: 'smooth'
@@ -417,8 +471,9 @@
         }, 100);
       }
     });
-    </script>
-    
+  </script>
+
 
 </body>
+
 </html>
